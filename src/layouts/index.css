@@ -7,26 +7,39 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   overflow-x: hidden;
-  background-color: BlanchedAlmond;
+  background-color: #ffe2b8;
 }
 
-.header {
-  padding: 1.5rem;
+body {
+  margin: 0 0;
 }
 
 strong{
   font-weight: 800;
 }
 
-.wrapper{
+.header {
   padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
 }
 
-body {
-  margin: 0 0;
+.wrapper{
+  padding: 1.5rem;
 }
+
+.input-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  padding: 1.5rem;
+
+  border-radius: 88px;
+  background: #ffe2b8;
+  box-shadow:  14px 14px 36px #f0d4ad,
+  -14px -14px 36px #fff0c3;
+}
+
+
 @media only screen and (max-width: 480px) {
   html {
     font-size: 100%;
