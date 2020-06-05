@@ -43,13 +43,14 @@ export default class extends React.Component<IProps, IState> {
 
   countVolatility = (): number => 0.0018 * (Math.pow(25 + this.state.averageTemperature, 2) * (100 - this.state.relativeHumidity)); // volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
 
-  countAbsoluteHumidity = (): number => ((this.state.treeAmount * 365.25 * 1000000) + (this.state.bushAmount * 365.25 * 1000000))/ (100 * 1000000 * this.state.territory); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for bushes)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
+  countAbsoluteHumidity = (): number => ((this.state.treeAmount * 365.25 * 1000000) + (this.state.bushAmount * 365.25 * 1000000)) / (100 * 1000000 * this.state.territory); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for bushes)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
 
   public render() {
     return (
       <div>
         <h1>Input Data</h1>
-        <TerritoryInput territory={this.state.territory} onInput={(event: any) => this.setState({ territory: event.target.value })}/>
+        <TerritoryInput territory={this.state.territory}
+                        onInput={(event: any) => this.setState({ territory: event.target.value })}/>
         <TemperatureInput temperature={this.state.averageTemperature}
                           onInput={(event: any) => this.setState({ averageTemperature: event.target.value })}/>
       </div>
