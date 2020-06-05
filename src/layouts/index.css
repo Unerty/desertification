@@ -51,26 +51,23 @@ strong{
   .input-card{
   }
   .inputs{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: 1fr;
   }
 }
 
 @media only screen and (min-width: 769px) and (max-width: 1200px) {
   .inputs {
     grid-template-columns: 1fr 1fr;
-    break-inside: avoid;
-  }
-  .input-card {
   }
 }
 
-@media only screen and (min-width: 1201px) {
+@media only screen and (min-width: 1201px) and (max-width: 1599px){
   .inputs {
     grid-template-columns: 1fr 1fr 1fr;
-    break-inside: avoid;
   }
-  .input-card {
+}
+@media only screen and (min-width: 1600px) {
+  .inputs {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
