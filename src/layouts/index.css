@@ -26,14 +26,19 @@ strong{
   padding: 1.5rem;
 }
 
+.inputs{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 20px;
+}
+
 .input-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: fit-content;
+  width: max-content;
   padding: 1.5rem;
   margin: 1.5rem;
-  min-width: 200px;
 
   border-radius: 88px;
   background: #ffe2b8;
@@ -42,8 +47,30 @@ strong{
 }
 
 
-@media only screen and (max-width: 480px) {
-  html {
-    font-size: 100%;
+@media only screen and (max-width: 768px) {
+  .input-card{
+  }
+  .inputs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1200px) {
+  .inputs {
+    grid-template-columns: 1fr 1fr;
+    break-inside: avoid;
+  }
+  .input-card {
+  }
+}
+
+@media only screen and (min-width: 1201px) {
+  .inputs {
+    grid-template-columns: 1fr 1fr 1fr;
+    break-inside: avoid;
+  }
+  .input-card {
   }
 }
