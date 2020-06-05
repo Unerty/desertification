@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/desertification",
   siteMetadata: {
     title: `Desertification`
   },
