@@ -1,14 +1,17 @@
 import * as React from "react";
 import { saturationVaporDensity } from "../functions";
 import TemperatureInput from "../components/TemperatureInput";
+import TerritoryInput from "../components/TerritoryInput";
 
 interface IProps {
 }
 
 interface IState {
+  territory: number; // Area in square kilometres
   averageTemperature: number; // INPUT Average yearly temperature
   absoluteHumidity: number; // INPUT Measured in grams per one meter cubic of air
   treeAmount: number; // INPUT Amount of trees on the territory
+  bushAmount: number; // INPUT Amount of trees on the territory
   treeCutting: number; // INPUT How much of trees is cut every year
   treePlanting: number; // INPUT Trees planted per year
   precipation: number; // INPUT Measured in mm. Sahara: 25-200, Kalahari: 100-500, Atakama: 25
@@ -22,15 +25,17 @@ export default class extends React.Component<IProps, IState> {
   constructor(props: IProps, context: any) {
     super(props, context);
     this.state = {
-      averageTemperature: 30,
-      absoluteHumidity: 0,
-      treeAmount: 1000,
+      territory: 35000, // Area of Mojave desert in square kilometres
+      averageTemperature: 25, // Avg temp of Mojave Desert
+      absoluteHumidity: 0, // non-input
+      treeAmount: 3000,
+      bushAmount: 5000,
       treeCutting: 0,
       treePlanting: 0,
-      precipation: 50,
+      precipation: 150,
       additionalWatering: 0,
-      relativeHumidity: 0,
-      volatility: 0
+      relativeHumidity: 0, // non-input
+      volatility: 0 // non-input
     };
   }
 
@@ -38,12 +43,15 @@ export default class extends React.Component<IProps, IState> {
 
   countVolatility = (): number => 0.0018 * (Math.pow(25 + this.state.averageTemperature, 2) * (100 - this.state.relativeHumidity)); // volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
 
+  countAbsoluteHumidity = (): number => ((this.state.treeAmount * 365.25 * 1000000) + (this.state.bushAmount * 365.25 * 1000000))/ (100 * 1000000 * this.state.territory); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for bushes)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
 
   public render() {
     return (
       <div>
         <h1>Input Data</h1>
-        <TemperatureInput temperature={this.state.averageTemperature} onInput={(event: any) => this.setState({averageTemperature: event.target.value})}/>
+        <TerritoryInput territory={this.state.territory} onInput={(event: any) => this.setState({ territory: event.target.value })}/>
+        <TemperatureInput temperature={this.state.averageTemperature}
+                          onInput={(event: any) => this.setState({ averageTemperature: event.target.value })}/>
       </div>
     );
   }
