@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css?family=Podkova:400&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Podkova:600&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Podkova:800&display=swap");
+
+html {
+  font-family: Podkova, serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  background-color: BlanchedAlmond;
+}
+
+.header {
+  padding: 1.5rem;
+}
+
+strong{
+  font-weight: 800;
+}
+
+.wrapper{
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  margin: 0 0;
+}
+@media only screen and (max-width: 480px) {
+  html {
+    font-size: 100%;
+  }
+}
