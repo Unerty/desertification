@@ -10,7 +10,6 @@ import TemperatureInput from "../components/inputs/TemperatureInput";
 import TerritoryInput from "../components/inputs/TerritoryInput";
 import TreeAmountInput from "../components/inputs/TreeAmountInput";
 import CactooAmountInput from "../components/inputs/CactooAmountInput";
-import TreeCuttingInput from "../components/inputs/TreeCuttingInput";
 import TreePlantingInput from "../components/inputs/TreePlantingInput";
 import PrecipationInput from "../components/inputs/PrecipationInput";
 import AdditionalWateringInput from "../components/inputs/AdditionalWateringInput";
