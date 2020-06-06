@@ -1,13 +1,13 @@
 import * as React from "react";
 import { saturationVaporDensity } from "../functions";
-import TemperatureInput from "../components/TemperatureInput";
-import TerritoryInput from "../components/TerritoryInput";
-import TreeAmountInput from "../components/TreeAmountInput";
-import BushesAmountInput from "../components/BushesAmountInput";
-import TreeCuttingInput from "../components/TreeCuttingInput";
-import TreePlantingInput from "../components/TreePlantingInput";
-import PrecipationInput from "../components/PrecipationInput";
-import AdditionalWateringInput from "../components/AdditionalWateringInput";
+import TemperatureInput from "../components/inputs/TemperatureInput";
+import TerritoryInput from "../components/inputs/TerritoryInput";
+import TreeAmountInput from "../components/inputs/TreeAmountInput";
+import BushesAmountInput from "../components/inputs/BushesAmountInput";
+import TreeCuttingInput from "../components/inputs/TreeCuttingInput";
+import TreePlantingInput from "../components/inputs/TreePlantingInput";
+import PrecipationInput from "../components/inputs/PrecipationInput";
+import AdditionalWateringInput from "../components/inputs/AdditionalWateringInput";
 
 interface IProps {
 }
