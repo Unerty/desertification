@@ -11,10 +11,13 @@ body {
 }
 
 strong {
+  z-index: 1001;
   font-weight: 800;
 }
 
 .header {
+  position: relative;
+  z-index: 20001;
   padding: 1.5rem;
 }
 
@@ -29,13 +32,15 @@ strong {
 }
 
 .rounded {
+  position: relative;
+  z-index: 20001;
   border-radius: 88px;
   background: #ffe2b8;
-  box-shadow: 14px 14px 36px #f0d4ad,
-  -14px -14px 36px #fff0c3;
+  opacity: 0.8;
 }
 
 .card {
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,6 +48,48 @@ strong {
   padding: 1.5rem;
   margin: 1.5rem;
 }
+
+span{
+  position: relative;
+  z-index: 20001;
+}
+h1{
+  position: relative;
+  z-index: 20001;
+}
+
+.background-image {
+  min-width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  transition: 1s;
+  z-index: 100!important;
+}
+
+.desert{
+  background-image: url(https://raw.githubusercontent.com/Unerty/desertification/master/src/images/desert.jpg);
+}
+
+.moderate{
+  background-image: url(https://raw.githubusercontent.com/Unerty/desertification/master/src/images/moderate.jpg);
+}
+
+.cold-desert{
+  background-image: url(https://raw.githubusercontent.com/Unerty/desertification/master/src/images/coldDesert.jpg);
+}
+
+.rainforest{
+  background-image: url(https://raw.githubusercontent.com/Unerty/desertification/master/src/images/rainforest.jpg);
+}
+
+.rain{
+  background-image: url(https://raw.githubusercontent.com/Unerty/desertification/master/src/images/rain.jpg);
+}
+
 
 .tree-color {
   background: #ceffbc;
