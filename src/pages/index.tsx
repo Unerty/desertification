@@ -52,7 +52,7 @@ export default class extends React.Component<IProps, IState> {
     };
   }
 
-  countAbsoluteHumidity = async (): Promise<number> => await((this.state.treeAmount * 365.25) + (this.state.cactooAmount * 365.25)) / (this.state.territory); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
+  countAbsoluteHumidity = async (): Promise<number> => await (((this.state.treeAmount * 365.25) + (this.state.cactooAmount * 365.25)) / (this.state.territory)); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
 
   countRelativeHumidity = async (): Promise<number> => await (await this.countAbsoluteHumidity() / saturationVaporDensity(this.state.averageTemperature)); // https://www.yaklass.ru/p/fizika/8-klass/izmenenie-sostoianiia-veshchestva-141552/otnositelnaia-vlazhnost-vozdukha-i-ee-izmerenie-189576/re-18d24d91-b778-4262-983f-4e1101acae16
 
@@ -61,7 +61,7 @@ export default class extends React.Component<IProps, IState> {
     console.log(`addedAverageTemperature: ${addedAverageTemperature}`);
     console.log(`pow result: ${(Math.pow((addedAverageTemperature), 2))}`);
     console.log(`100 - rel.hum.: ${100 - await this.countRelativeHumidity()}`);
-    return await ((0.01 * Math.pow(addedAverageTemperature, 2)) * (100 - await this.countRelativeHumidity()))// volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
+    return await ((0.01 * Math.pow(addedAverageTemperature, 2)) * (100 - await this.countRelativeHumidity()));// volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
   };
 
   setAbsoluteHumidity = async (): Promise<void> => this.setState({ absoluteHumidity: await this.countAbsoluteHumidity() });
