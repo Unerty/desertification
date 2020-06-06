@@ -74,7 +74,7 @@ export default class extends React.Component<IProps, IState> {
 
   countVolatility = async (): Promise<number> => {
     const addedAverageTemperature = 25 + this.state.averageTemperature;
-    return await ((0.01 * Math.pow(addedAverageTemperature, 2)) * (100 - await this.countRelativeHumidity()));// volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
+    return await Math.max(((0.01 * Math.pow(addedAverageTemperature, 2)) * (100 - await this.countRelativeHumidity())), 0.01);// volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
   };
 
   countWaterIncome = (): number => (Number(this.state.precipation) + (1000 * (Number(this.state.additionalWatering) / Number(this.state.territory))) - ((Number(this.state.waterAmount) * waterVaporizingCoefficient(Number(this.state.averageTemperature))) / (Number(this.state.territory) * 100000)));
@@ -99,12 +99,22 @@ export default class extends React.Component<IProps, IState> {
     if (this.state.averageTemperature < 1) {
       backgroundStyle = "cold-desert";
     } else {
-      if (humidificationIndex < 0.15) {
+      if (humidificationIndex <= 0.15) {
         backgroundStyle = "desert";
+      }
+      if (humidificationIndex > 0.15 && humidificationIndex <= 0.4) {
+        backgroundStyle = "moderate";
+      }
+      if (humidificationIndex > 0.4 && humidificationIndex <= 1) {
+        backgroundStyle = "rainforest";
+      }
+      if (humidificationIndex > 1) {
+        backgroundStyle = "rain";
       }
     }
     return (
-      <div className="">
+      <div>
+        <div className={`background-image + ${backgroundStyle}`} />
         <h1>Input Data</h1>
         <div className={"group-of-cards"}>
           <TerritoryInput territory={this.state.territory}
@@ -161,6 +171,11 @@ export default class extends React.Component<IProps, IState> {
           <WaterIncome waterIncome={this.state.waterIncome}/>
           <HumidificationIndex humidificationIndex={humidificationIndex}/>
         </div>
+        <div className="cold-desert"/>
+        <div className="desert"/>
+        <div className="moderate"/>
+        <div className="rainforest"/>
+        <div className="rain"/>
       </div>
     );
   }
