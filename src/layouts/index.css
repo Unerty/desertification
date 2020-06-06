@@ -14,7 +14,7 @@ body {
   margin: 0 0;
 }
 
-strong{
+strong {
   font-weight: 800;
 }
 
@@ -22,11 +22,11 @@ strong{
   padding: 1.5rem;
 }
 
-.wrapper{
+.wrapper {
   padding: 1.5rem;
 }
 
-.inputs{
+.inputs {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 20px;
@@ -42,15 +42,27 @@ strong{
 
   border-radius: 88px;
   background: #ffe2b8;
-  box-shadow:  14px 14px 36px #f0d4ad,
+  box-shadow: 14px 14px 36px #f0d4ad,
   -14px -14px 36px #fff0c3;
 }
 
+.tree-color {
+  background: #ceffbc;
+}
+
+.bush-color {
+  background: #f9ffad;
+}
+
+.water-color{
+  background: #d1eeff;
+}
 
 @media only screen and (max-width: 768px) {
-  .input-card{
+  .input-card {
   }
-  .inputs{
+
+  .inputs {
     grid-template-columns: 1fr;
   }
 }
@@ -61,11 +73,12 @@ strong{
   }
 }
 
-@media only screen and (min-width: 1201px) and (max-width: 1599px){
+@media only screen and (min-width: 1201px) and (max-width: 1599px) {
   .inputs {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
+
 @media only screen and (min-width: 1600px) {
   .inputs {
     grid-template-columns: 1fr 1fr 1fr 1fr;

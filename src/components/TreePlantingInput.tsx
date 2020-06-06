@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const TreePlantingInput = (props: IProps) =>
-  <div className={"input-card"}>
+  <div className={"input-card tree-color"}>
     <span>Trees planted every year: <strong> {props.treePlanting}</strong></span>
     <input style={{ borderStyle: "unset", borderRadius: "10px" }}
            type="number" id="treePlantingSelector" name="treePlantingSelector" min="0" max="2000000" step="1" value={props.treePlanting}
