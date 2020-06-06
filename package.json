@@ -9,10 +9,7 @@
     "gatsby": "^1.9.119",
     "gatsby-link": "^1.6.28",
     "gatsby-plugin-react-helmet": "^1.0.8",
-    "gatsby-plugin-typescript": "^1.4.10",
-    "preact": "^10.4.4",
-    "preact-compat": "^3.19.0",
-    "preact-router": "^3.2.1"
+    "gatsby-plugin-typescript": "^1.4.10"
   },
   "keywords": [
     "gatsby, typescript"
@@ -20,7 +17,7 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby build --no-uglify",
     "develop": "gatsby develop",
     "format": "prettier --parser typescript --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.ts*\"",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -29,8 +26,6 @@
   },
   "devDependencies": {
     "gh-pages": "^3.0.0",
-    "preact-cli": "^2.2.1",
-    "preact-cli-plugin-fast-async": "^1.0.1",
     "prettier": "^1.8.2"
   }
 }
