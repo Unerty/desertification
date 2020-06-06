@@ -30,7 +30,7 @@ export default class extends React.Component<IProps, IState> {
   constructor(props: IProps, context: any) {
     super(props, context);
     this.state = {
-      territory: 35000, // Area of Mojave desert in square kilometres
+      territory: 124000, // Area of Mojave desert in square kilometres
       averageTemperature: 25, // Avg temp of Mojave Desert
       treeAmount: 3000,
       treeCutting: 0,
