@@ -20,7 +20,7 @@ webpackJsonp([22676092666560,60335399758886],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _index = __webpack_require__(206);
+	var _index = __webpack_require__(209);
 	
 	var _index2 = _interopRequireDefault(_index);
 	
@@ -38,28 +38,28 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 211:
+/***/ 214:
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(221), __esModule: true };
+	module.exports = { "default": __webpack_require__(224), __esModule: true };
 
 /***/ }),
 
-/***/ 213:
+/***/ 216:
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(223), __esModule: true };
+	module.exports = { "default": __webpack_require__(226), __esModule: true };
 
 /***/ }),
 
-/***/ 217:
+/***/ 220:
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _assign = __webpack_require__(211);
+	var _assign = __webpack_require__(214);
 	
 	var _assign2 = _interopRequireDefault(_assign);
 	
@@ -81,7 +81,7 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 218:
+/***/ 221:
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -102,25 +102,25 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 221:
+/***/ 224:
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(246);
+	__webpack_require__(249);
 	module.exports = __webpack_require__(12).Object.assign;
 
 
 /***/ }),
 
-/***/ 223:
+/***/ 226:
 /***/ (function(module, exports, __webpack_require__) {
 
-	__webpack_require__(248);
+	__webpack_require__(251);
 	module.exports = __webpack_require__(12).Object.keys;
 
 
 /***/ }),
 
-/***/ 236:
+/***/ 239:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -165,7 +165,7 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 240:
+/***/ 243:
 /***/ (function(module, exports, __webpack_require__) {
 
 	// most Object methods by ES6 should accept primitives
@@ -182,25 +182,25 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 246:
+/***/ 249:
 /***/ (function(module, exports, __webpack_require__) {
 
 	// 19.1.3.1 Object.assign(target, source)
 	var $export = __webpack_require__(27);
 	
-	$export($export.S + $export.F, 'Object', { assign: __webpack_require__(236) });
+	$export($export.S + $export.F, 'Object', { assign: __webpack_require__(239) });
 
 
 /***/ }),
 
-/***/ 248:
+/***/ 251:
 /***/ (function(module, exports, __webpack_require__) {
 
 	// 19.1.2.14 Object.keys(O)
 	var toObject = __webpack_require__(59);
 	var $keys = __webpack_require__(43);
 	
-	__webpack_require__(240)('keys', function () {
+	__webpack_require__(243)('keys', function () {
 	  return function keys(it) {
 	    return $keys(toObject(it));
 	  };
@@ -209,7 +209,7 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 308:
+/***/ 311:
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -217,15 +217,15 @@ webpackJsonp([22676092666560,60335399758886],{
 	exports.__esModule = true;
 	exports.navigateTo = exports.replace = exports.push = undefined;
 	
-	var _extends2 = __webpack_require__(217);
+	var _extends2 = __webpack_require__(220);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
-	var _keys = __webpack_require__(213);
+	var _keys = __webpack_require__(216);
 	
 	var _keys2 = _interopRequireDefault(_keys);
 	
-	var _objectWithoutProperties2 = __webpack_require__(218);
+	var _objectWithoutProperties2 = __webpack_require__(221);
 	
 	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 	
@@ -456,7 +456,7 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 398:
+/***/ 401:
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -557,7 +557,7 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 399:
+/***/ 402:
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports.__esModule = true;
@@ -575,15 +575,15 @@ webpackJsonp([22676092666560,60335399758886],{
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _reactSideEffect = __webpack_require__(418);
+	var _reactSideEffect = __webpack_require__(421);
 	
 	var _reactSideEffect2 = _interopRequireDefault(_reactSideEffect);
 	
-	var _reactFastCompare = __webpack_require__(398);
+	var _reactFastCompare = __webpack_require__(401);
 	
 	var _reactFastCompare2 = _interopRequireDefault(_reactFastCompare);
 	
-	var _HelmetUtils = __webpack_require__(400);
+	var _HelmetUtils = __webpack_require__(403);
 	
 	var _HelmetConstants = __webpack_require__(176);
 	
@@ -925,7 +925,7 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 400:
+/***/ 403:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {exports.__esModule = true;
@@ -1468,7 +1468,7 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 418:
+/***/ 421:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1477,7 +1477,7 @@ webpackJsonp([22676092666560,60335399758886],{
 	
 	var React = __webpack_require__(2);
 	var React__default = _interopDefault(React);
-	var shallowEqual = _interopDefault(__webpack_require__(436));
+	var shallowEqual = _interopDefault(__webpack_require__(439));
 	
 	function _defineProperty(obj, key, value) {
 	  if (key in obj) {
@@ -1605,7 +1605,7 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 436:
+/***/ 439:
 /***/ (function(module, exports) {
 
 	//
@@ -1658,14 +1658,14 @@ webpackJsonp([22676092666560,60335399758886],{
 
 /***/ }),
 
-/***/ 295:
+/***/ 298:
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 206:
+/***/ 209:
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1678,9 +1678,9 @@ webpackJsonp([22676092666560,60335399758886],{
 	
 	Object.defineProperty(exports, "__esModule", { value: true });
 	var React = __webpack_require__(2);
-	var gatsby_link_1 = __webpack_require__(308);
-	var react_helmet_1 = __webpack_require__(399);
-	__webpack_require__(295);
+	var gatsby_link_1 = __webpack_require__(311);
+	var react_helmet_1 = __webpack_require__(402);
+	__webpack_require__(298);
 	var Header = function Header() {
 	    return React.createElement("div", { className: "header", style: {
 	            background: "sandybrown"
