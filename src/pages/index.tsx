@@ -6,6 +6,7 @@ import TreeAmountInput from "../components/TreeAmountInput";
 import BushesAmountInput from "../components/BushesAmountInput";
 import TreeCuttingInput from "../components/TreeCuttingInput";
 import TreePlantingInput from "../components/TreePlantingInput";
+import PrecipationInput from "../components/PrecipationInput";
 
 interface IProps {
 }
@@ -56,16 +57,18 @@ export default class extends React.Component<IProps, IState> {
         <div className={"inputs"}>
           <TerritoryInput territory={this.state.territory}
                           onInput={(event: any) => this.setState({ territory: event.target.value })}/>
+          <TemperatureInput temperature={this.state.averageTemperature}
+                            onInput={(event: any) => this.setState({ averageTemperature: event.target.value })}/>
+          <PrecipationInput precipation={this.state.precipation}
+                            onInput={(event: any) => this.setState({ precipation: event.target.value })}/>
           <TreeAmountInput treeAmount={this.state.treeAmount}
                            onInput={(event: any) => this.setState({ treeAmount: event.target.value })}/>
           <TreeCuttingInput treeCutting={this.state.treeCutting}
-                           onInput={(event: any) => this.setState({ treeCutting: event.target.value })}/>
+                            onInput={(event: any) => this.setState({ treeCutting: event.target.value })}/>
           <TreePlantingInput treePlanting={this.state.treePlanting}
-                            onInput={(event: any) => this.setState({ treePlanting: event.target.value })}/>
+                             onInput={(event: any) => this.setState({ treePlanting: event.target.value })}/>
           <BushesAmountInput bushesAmount={this.state.bushesAmount}
                              onInput={(event: any) => this.setState({ bushesAmount: event.target.value })}/>
-          <TemperatureInput temperature={this.state.averageTemperature}
-                            onInput={(event: any) => this.setState({ averageTemperature: event.target.value })}/>
         </div>
       </div>
     );
