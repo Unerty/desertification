@@ -34,7 +34,6 @@ interface IState {
   territory: number; // INPUT Area in square kilometres
   averageTemperature: number; // INPUT Average yearly temperature
   treeAmount: number; // INPUT Amount of trees on the territory
-  treeCutting: number; // INPUT How much of trees is cut every year
   treePlanting: number; // INPUT Trees planted per year
   cactooAmount: number; // INPUT Amount of trees on the territory
   precipation: number; // INPUT Measured in mm. Sahara: 25-200, Kalahari: 100-500, Atakama: 25
@@ -54,12 +53,11 @@ export default class extends React.Component<IProps, IState> {
       territory: 124000, // Area of Mojave desert in square kilometres
       averageTemperature: Number(25), // Avg temp of Mojave Desert
       treeAmount: 3000,
-      treeCutting: 0,
       treePlanting: 0,
       cactooAmount: 5000,
-      precipation: 150,
+      precipation: 300,
       additionalWatering: VOLGA_RIVER_YEARLY_WATERFLOW,
-      waterAmount: 13,
+      waterAmount: 1300,
       relativeHumidity: 0, // non-input
       volatility: 0, // non-input
       absoluteHumidity: 0, // non-input
