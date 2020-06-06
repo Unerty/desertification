@@ -1,4 +1,4 @@
-webpackJsonp([178469467687848],{
+webpackJsonp([221374088121123],{
 
 /***/ 99:
 /***/ (function(module, exports, __webpack_require__) {
@@ -1066,19 +1066,509 @@ webpackJsonp([178469467687848],{
 
 /***/ }),
 
-/***/ 209:
+/***/ 194:
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", { value: true });
 	var React = __webpack_require__(2);
-	var NotFoundPage = function NotFoundPage() {
-	    return React.createElement("div", null, React.createElement("h1", null, "NOT FOUND"), React.createElement("p", null, "You just hit a route that doesn't exist... the sadness."));
+	var AbsoluteHumidity = function AbsoluteHumidity(props) {
+	    return React.createElement("div", { className: "rounded card water-color" }, React.createElement("span", null, "Absolute Humidity: ", React.createElement("strong", null, " ", props.absoluteHumidity, " g/m\xB3")));
 	};
-	exports.default = NotFoundPage;
+	exports.default = AbsoluteHumidity;
+
+/***/ }),
+
+/***/ 195:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var HumidificationIndex = function HumidificationIndex(props) {
+	    return React.createElement("div", { className: "rounded card" }, React.createElement("span", null, "Humidification Index: ", React.createElement("strong", null, " ", props.humidificationIndex, " ")));
+	};
+	exports.default = HumidificationIndex;
+
+/***/ }),
+
+/***/ 196:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var RelativeHumidity = function RelativeHumidity(props) {
+	    return React.createElement("div", { className: "rounded card water-color" }, React.createElement("span", null, "Relative Humidity: ", React.createElement("strong", null, " ", props.relativeHumidity, "%")));
+	};
+	exports.default = RelativeHumidity;
+
+/***/ }),
+
+/***/ 197:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var Volatility = function Volatility(props) {
+	    return React.createElement("div", { className: "rounded card water-color" }, React.createElement("span", null, "Volatility: ", React.createElement("strong", null, " ", props.volatility == 0.01 ? 0 : props.volatility, " mm/year")));
+	};
+	exports.default = Volatility;
+
+/***/ }),
+
+/***/ 198:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var WaterIncome = function WaterIncome(props) {
+	    return React.createElement("div", { className: "rounded card water-color" }, React.createElement("span", null, "Water Income: ", React.createElement("strong", null, " ", props.waterIncome, " mm/year")));
+	};
+	exports.default = WaterIncome;
+
+/***/ }),
+
+/***/ 199:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var AdditionalWateringInput = function AdditionalWateringInput(props) {
+	    return React.createElement("div", { className: "rounded card water-color" }, React.createElement("span", null, "AdditionalWatering: ", React.createElement("strong", null, " ", props.additionalWatering, " km\xB3/year")), React.createElement("input", { style: { borderStyle: "unset", borderRadius: "10px" }, type: "number", id: "additionalWateringSelector", name: "additionalWateringSelector", min: "0", max: "20000", step: "1", value: props.additionalWatering, onInput: function onInput(event) {
+	            return props.onInput(event);
+	        }, onChange: function onChange(event) {
+	            return props.onInput(event);
+	        } }));
+	};
+	exports.default = AdditionalWateringInput;
+
+/***/ }),
+
+/***/ 200:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var CactooAmountInput = function CactooAmountInput(props) {
+	    return React.createElement("div", { className: "rounded card cactoo-color" }, React.createElement("span", null, "Amount of cactoo: ", React.createElement("strong", null, " ", props.cactooAmount)), React.createElement("input", { style: { borderStyle: "unset", borderRadius: "10px" }, type: "number", id: "cactooAmountSelector", name: "cactooAmountSelector", min: "0", max: "2000000", step: "1", value: props.cactooAmount, onInput: function onInput(event) {
+	            return props.onInput(event);
+	        }, onChange: function onChange(event) {
+	            return props.onInput(event);
+	        } }));
+	};
+	exports.default = CactooAmountInput;
+
+/***/ }),
+
+/***/ 201:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var PrecipationInput = function PrecipationInput(props) {
+	    return React.createElement("div", { className: "rounded card water-color" }, React.createElement("span", null, "Precipation: ", React.createElement("strong", null, " ", props.precipation, " mm/year")), React.createElement("input", { style: { borderStyle: "unset", borderRadius: "10px" }, type: "number", id: "precipationSelector", name: "precipationSelector", min: "0", max: "2000", step: "1", value: props.precipation, onInput: function onInput(event) {
+	            return props.onInput(event);
+	        }, onChange: function onChange(event) {
+	            return props.onInput(event);
+	        } }));
+	};
+	exports.default = PrecipationInput;
+
+/***/ }),
+
+/***/ 202:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var TemperatureInput = function TemperatureInput(props) {
+	    return React.createElement("div", { className: "rounded card" }, React.createElement("span", null, "Temperature: ", React.createElement("strong", null, " ", props.temperature, " \xB0C")), React.createElement("input", { style: { width: "max-content" }, type: "range", id: "temperatureSelector", name: "temperatureSelector", min: "-30", max: "70", step: "1", onInput: function onInput(event) {
+	            return props.onInput(event);
+	        }, onChange: function onChange(event) {
+	            return props.onInput(event);
+	        } }));
+	};
+	exports.default = TemperatureInput;
+
+/***/ }),
+
+/***/ 203:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var TerritoryInput = function TerritoryInput(props) {
+	    return React.createElement("div", { className: "rounded card" }, React.createElement("span", null, "Territory area: ", React.createElement("strong", null, " ", props.territory, " km\xB2")), React.createElement("input", { style: { borderStyle: "unset", borderRadius: "10px" }, type: "number", id: "territorySelector", name: "territorySelector", min: "0", max: "2000000", step: "1", value: props.territory, onInput: function onInput(event) {
+	            return props.onInput(event);
+	        }, onChange: function onChange(event) {
+	            return props.onInput(event);
+	        } }));
+	};
+	exports.default = TerritoryInput;
+
+/***/ }),
+
+/***/ 204:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var TreeAmountInput = function TreeAmountInput(props) {
+	    return React.createElement("div", { className: "rounded card tree-color" }, React.createElement("span", null, "Amount of trees: ", React.createElement("strong", null, " ", props.treeAmount)), React.createElement("input", { style: { borderStyle: "unset", borderRadius: "10px" }, type: "number", id: "treeAmountSelector", name: "treeAmountSelector", min: "0", max: "2000000", step: "1", value: props.treeAmount, onInput: function onInput(event) {
+	            return props.onInput(event);
+	        }, onChange: function onChange(event) {
+	            return props.onInput(event);
+	        } }));
+	};
+	exports.default = TreeAmountInput;
+
+/***/ }),
+
+/***/ 205:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var TreePlantingInput = function TreePlantingInput(props) {
+	    return React.createElement("div", { className: "rounded card tree-color" }, React.createElement("span", null, "Trees planted every year: ", React.createElement("strong", null, " ", props.treePlanting)), React.createElement("input", { style: { borderStyle: "unset", borderRadius: "10px" }, type: "number", id: "treePlantingSelector", name: "treePlantingSelector", min: "0", max: "2000000", step: "1", value: props.treePlanting, onInput: function onInput(event) {
+	            return props.onInput(event);
+	        }, onChange: function onChange(event) {
+	            return props.onInput(event);
+	        } }));
+	};
+	exports.default = TreePlantingInput;
+
+/***/ }),
+
+/***/ 206:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var WaterAmountInput = function WaterAmountInput(props) {
+	    return React.createElement("div", { className: "rounded card water-color" }, React.createElement("span", null, "WaterAmount area: ", React.createElement("strong", null, " ", props.waterAmount, " km\xB2")), React.createElement("input", { style: { borderStyle: "unset", borderRadius: "10px" }, type: "number", id: "waterAmountSelector", name: "waterAmountSelector", min: "0", max: "20000", step: "1", value: props.waterAmount, onInput: function onInput(event) {
+	            return props.onInput(event);
+	        }, onChange: function onChange(event) {
+	            return props.onInput(event);
+	        } }));
+	};
+	exports.default = WaterAmountInput;
+
+/***/ }),
+
+/***/ 207:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var saturationVaporDensityTable_1 = __webpack_require__(211);
+	var WATER_VAPORIZES_PER_YEAR_PER_ONEM2_WHEN_30DEGREES = Number(1507752); // grams per year when 30 degrees
+	exports.saturationVaporDensity = function (temperature) {
+	    if (saturationVaporDensityTable_1.default.has(temperature)) {
+	        return saturationVaporDensityTable_1.default.get(temperature);
+	    } else {
+	        console.log("Temperature: " + temperature + ", SVD: " + saturationVaporDensityTable_1.default.get(Math.floor(temperature)));
+	        return saturationVaporDensityTable_1.default.get(Math.floor(temperature));
+	    }
+	};
+	exports.waterVaporizingCoefficient = function (temperature) {
+	    return temperature >= 0 ? Number(WATER_VAPORIZES_PER_YEAR_PER_ONEM2_WHEN_30DEGREES * exports.saturationVaporDensity(temperature)) / 30.3 : Number(WATER_VAPORIZES_PER_YEAR_PER_ONEM2_WHEN_30DEGREES * exports.saturationVaporDensity(temperature)) / (1000000 * 30.3);
+	};
+
+/***/ }),
+
+/***/ 210:
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	// https://cyberleninka.ru/article/n/dnevnoy-rashod-vody-na-transpiratsiyu-tselym-drevesnym-rasteniem
+	// https://studfile.net/preview/5707905/page:3/ - about volatility
+	// http://sun.tsu.ru/mminfo/000063105/274/image/274-136.pdf and http://www.kovas.ru/pdf1/40.pdf about water vaporizing
+	// (0.172*24*365.25)*1000
+	
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var React = __webpack_require__(2);
+	var functions_1 = __webpack_require__(207);
+	var TemperatureInput_1 = __webpack_require__(202);
+	var TerritoryInput_1 = __webpack_require__(203);
+	var TreeAmountInput_1 = __webpack_require__(204);
+	var CactooAmountInput_1 = __webpack_require__(200);
+	var TreePlantingInput_1 = __webpack_require__(205);
+	var PrecipationInput_1 = __webpack_require__(201);
+	var AdditionalWateringInput_1 = __webpack_require__(199);
+	var RelativeHumidity_1 = __webpack_require__(196);
+	var AbsoluteHumidity_1 = __webpack_require__(194);
+	var Volatility_1 = __webpack_require__(197);
+	var WaterAmountInput_1 = __webpack_require__(206);
+	var WaterIncome_1 = __webpack_require__(198);
+	var HumidificationIndex_1 = __webpack_require__(195);
+	var CACTOO_VAPORIZES_PER_YEAR = 6000; // grams per year https://books.google.com.ua/books?id=cgo0ukOa_gIC&pg=PA9&lpg=PA9&dq=%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE+%D0%BA%D0%B0%D0%BA%D1%82%D1%83%D1%81%D0%BE%D0%B2+%D0%B2+%D0%BE%D0%B4%D0%BD%D0%BE%D0%B9+%D0%BF%D1%83%D1%81%D1%82%D1%8B%D0%BD%D0%B5&source=bl&ots=6FQXLOTKi6&sig=ACfU3U3f1b84bYd4NhgYaQFfiwywuMDKxQ&hl=ru&sa=X&ved=2ahUKEwid-7aZ2O3pAhWnk4sKHcG3BW8Q6AEwBXoECAkQAQ#v=onepage&q=%D0%B8%D1%81%D0%BF%D0%B0%D1%80%D1%8F%D0%B5%D1%82%20%D0%BA%D0%B0%D0%BA%D1%82%D1%83%D1%81&f=false
+	var TREE_VAPORIZES_PER_DAY = 400000; //grams per day https://cyberleninka.ru/article/n/dnevnoy-rashod-vody-na-transpiratsiyu-tselym-drevesnym-rasteniem
+	var CLOUD_HEIGHT = 5000; // meters https://public.wmo.int/ru/%D0%B2%D1%81%D0%B5%D0%BC%D0%B8%D1%80%D0%BD%D1%8B%D0%B9-%D0%BC%D0%B5%D1%82%D0%B5%D0%BE%D1%80%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9-%D0%B4%D0%B5%D0%BD%D1%8C-2017-%D0%B3/%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F-%D0%BE%D0%B1%D0%BB%D0%B0%D0%BA%D0%BE%D0%B2#:~:text=%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BE%D0%B1%D0%BB%D0%B0%D0%BA%D0%BE%D0%B2%20%D0%B2%D0%B5%D1%80%D1%85%D0%BD%D0%B5%D0%B3%D0%BE%20%D1%8F%D1%80%D1%83%D1%81%D0%B0%2C%20%D0%BA%D0%B0%D0%BA,%D0%BC%D0%B5%D1%82%D1%80%D0%BE%D0%B2%20(6%20500%20%D1%84%D1%83%D1%82%D0%BE%D0%B2).
+	var DESERT_HUMIDIFICATION_INDEX = 0.15; // something is a desert if (precipation + extra water) / volatility < 0.15 https://ru.wikipedia.org/wiki/%D0%9F%D1%83%D1%81%D1%82%D1%8B%D0%BD%D1%8F
+	var VOLGA_RIVER_YEARLY_WATERFLOW = 254; // km3/year (8060 m3/sec) https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D1%80%D0%B5%D0%BA_%D0%BF%D0%BE_%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B2%D0%BE%D0%B4%D0%BD%D0%BE%D1%81%D1%82%D0%B8
+	
+	var default_1 = function (_React$Component) {
+	    _inherits(default_1, _React$Component);
+	
+	    function default_1(props, context) {
+	        _classCallCheck(this, default_1);
+	
+	        var _this = _possibleConstructorReturn(this, _React$Component.call(this, props, context));
+	
+	        _this.countAbsoluteHumidity = _asyncToGenerator(function* () {
+	            return (yield Number(_this.state.treeAmount * TREE_VAPORIZES_PER_DAY / CLOUD_HEIGHT * 365.25 + _this.state.cactooAmount * CACTOO_VAPORIZES_PER_YEAR / CLOUD_HEIGHT) + Number(_this.state.waterAmount) * functions_1.waterVaporizingCoefficient(_this.state.averageTemperature) * 50) / (_this.state.territory * CLOUD_HEIGHT); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
+	        });
+	        _this.countRelativeHumidity = _asyncToGenerator(function* () {
+	            return yield (yield _this.countAbsoluteHumidity()) / functions_1.saturationVaporDensity(_this.state.averageTemperature);
+	        }); // https://www.yaklass.ru/p/fizika/8-klass/izmenenie-sostoianiia-veshchestva-141552/otnositelnaia-vlazhnost-vozdukha-i-ee-izmerenie-189576/re-18d24d91-b778-4262-983f-4e1101acae16
+	        _this.countVolatility = _asyncToGenerator(function* () {
+	            var addedAverageTemperature = 25 + _this.state.averageTemperature;
+	            return yield Math.max(0.01 * Math.pow(addedAverageTemperature, 2) * (100 - (yield _this.countRelativeHumidity())), 0.01); // volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
+	        });
+	        _this.countWaterIncome = function () {
+	            return Number(_this.state.precipation) + 1000 * (Number(_this.state.additionalWatering) / Number(_this.state.territory)) - Number(_this.state.waterAmount) * functions_1.waterVaporizingCoefficient(Number(_this.state.averageTemperature)) / (Number(_this.state.territory) * 100000);
+	        };
+	        _this.setAbsoluteHumidity = _asyncToGenerator(function* () {
+	            return _this.setState({ absoluteHumidity: yield _this.countAbsoluteHumidity() });
+	        });
+	        _this.setRelativeHumidity = _asyncToGenerator(function* () {
+	            return _this.setState({ relativeHumidity: yield _this.countRelativeHumidity() });
+	        });
+	        _this.setVolatility = _asyncToGenerator(function* () {
+	            return yield _this.setState({ volatility: yield _this.countVolatility() });
+	        });
+	        _this.setWaterIncome = _asyncToGenerator(function* () {
+	            return yield _this.setState({ waterIncome: yield _this.countWaterIncome() });
+	        });
+	        _this.setCountedResults = function () {
+	            _this.setAbsoluteHumidity().then(_this.setRelativeHumidity).then(_this.setVolatility).then(_this.setRelativeHumidity).then(_this.setAbsoluteHumidity).then(_this.setWaterIncome);
+	        };
+	        _this.state = {
+	            territory: 124000,
+	            averageTemperature: Number(25),
+	            treeAmount: 3000,
+	            treeCutting: 0,
+	            treePlanting: 0,
+	            cactooAmount: 5000,
+	            precipation: 150,
+	            additionalWatering: VOLGA_RIVER_YEARLY_WATERFLOW,
+	            waterAmount: 13,
+	            relativeHumidity: 0,
+	            volatility: 0,
+	            absoluteHumidity: 0,
+	            waterIncome: 0 // non-input
+	        };
+	        return _this;
+	    }
+	
+	    default_1.prototype.componentDidMount = function componentDidMount() {
+	        this.setCountedResults();
+	    };
+	
+	    default_1.prototype.render = function render() {
+	        var _this2 = this;
+	
+	        var humidificationIndex = this.countWaterIncome() / this.state.volatility; // (precipation + extra water) / volatility < 0.15
+	        var backgroundStyle = "";
+	        if (this.state.averageTemperature < 1) {
+	            backgroundStyle = "cold-desert";
+	        } else {
+	            if (humidificationIndex <= 0.15) {
+	                backgroundStyle = "desert";
+	            }
+	            if (humidificationIndex > 0.15 && humidificationIndex <= 0.4) {
+	                backgroundStyle = "moderate";
+	            }
+	            if (humidificationIndex > 0.4 && humidificationIndex <= 1) {
+	                if (this.state.averageTemperature > 18) {
+	                    backgroundStyle = "rainforest";
+	                } else {
+	                    backgroundStyle = "wetland";
+	                }
+	            }
+	            if (humidificationIndex > 1) {
+	                backgroundStyle = "rain";
+	            }
+	        }
+	        return React.createElement("div", null, React.createElement("div", { className: "background-image + " + backgroundStyle }), React.createElement("h1", null, "Input Data"), React.createElement("div", { className: "group-of-cards" }, React.createElement(TerritoryInput_1.default, { territory: this.state.territory, onInput: function onInput(event) {
+	                _this2.setState({ territory: Number(event.target.value) });
+	                _this2.setCountedResults();
+	            } }), React.createElement(WaterAmountInput_1.default, { waterAmount: this.state.waterAmount, onInput: function onInput(event) {
+	                _this2.setState({ waterAmount: Number(event.target.value) });
+	                _this2.setCountedResults();
+	            } }), React.createElement(TemperatureInput_1.default, { temperature: this.state.averageTemperature, onInput: function onInput(event) {
+	                _this2.setState({ averageTemperature: Number(event.target.value) });
+	                _this2.setCountedResults();
+	            } }), React.createElement(PrecipationInput_1.default, { precipation: this.state.precipation, onInput: function onInput(event) {
+	                _this2.setState({ precipation: Number(event.target.value) });
+	                _this2.setCountedResults();
+	            } }), React.createElement(AdditionalWateringInput_1.default, { additionalWatering: this.state.additionalWatering, onInput: function onInput(event) {
+	                _this2.setState({ additionalWatering: Number(event.target.value) });
+	                _this2.setCountedResults();
+	            } }), React.createElement(TreeAmountInput_1.default, { treeAmount: this.state.treeAmount, onInput: function onInput(event) {
+	                _this2.setState({ treeAmount: Number(event.target.value) });
+	                _this2.setCountedResults();
+	            } }), React.createElement(TreePlantingInput_1.default, { treePlanting: this.state.treePlanting, onInput: function onInput(event) {
+	                _this2.setState({ treePlanting: Number(event.target.value) });
+	                _this2.setCountedResults();
+	            } }), React.createElement(CactooAmountInput_1.default, { cactooAmount: this.state.cactooAmount, onInput: function onInput(event) {
+	                _this2.setState({ cactooAmount: Number(event.target.value) });
+	                _this2.setCountedResults();
+	            } })), React.createElement("h1", null, "Counted Results"), React.createElement("div", { className: "group-of-cards" }, React.createElement(RelativeHumidity_1.default, { relativeHumidity: this.state.relativeHumidity }), React.createElement(AbsoluteHumidity_1.default, { absoluteHumidity: this.state.absoluteHumidity }), React.createElement(Volatility_1.default, { volatility: this.state.volatility }), React.createElement(WaterIncome_1.default, { waterIncome: this.state.waterIncome }), React.createElement(HumidificationIndex_1.default, { humidificationIndex: humidificationIndex })), React.createElement("div", { className: "cold-desert" }), React.createElement("div", { className: "desert" }), React.createElement("div", { className: "moderate" }), React.createElement("div", { className: "rainforest" }), React.createElement("div", { className: "rain" }), React.createElement("div", { className: "wetland" }));
+	    };
+	
+	    return default_1;
+	}(React.Component);
+	
+	exports.default = default_1;
+
+/***/ }),
+
+/***/ 211:
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var table = new Map();
+	table.set(-30, 0.33);
+	table.set(-29, 0.37);
+	table.set(-28, 0.41);
+	table.set(-27, 0.46);
+	table.set(-26, 0.51);
+	table.set(-25, 0.55);
+	table.set(-24, 0.6);
+	table.set(-23, 0.66);
+	table.set(-22, 0.73);
+	table.set(-21, 0.8);
+	table.set(-20, 0.88);
+	table.set(-19, 0.96);
+	table.set(-18, 1.05);
+	table.set(-17, 1.15);
+	table.set(-16, 1.27);
+	table.set(-15, 1.38);
+	table.set(-14, 1.51);
+	table.set(-13, 1.6);
+	table.set(-12, 1.8);
+	table.set(-11, 1.96);
+	table.set(0 - 10, 2.14);
+	table.set(0 - 9, 2.33);
+	table.set(0 - 8, 2.54);
+	table.set(0 - 7, 2.76);
+	table.set(0 - 6, 2.99);
+	table.set(0 - 5, 3.24);
+	table.set(0 - 4, 3.51);
+	table.set(0 - 3, 3.81);
+	table.set(0 - 2, 4.31);
+	table.set(0 - 1, 4.47);
+	table.set(0, 4.84);
+	table.set(1, 5.22);
+	table.set(2, 5.6);
+	table.set(3, 5.98);
+	table.set(4, 6.4);
+	table.set(5, 6.84);
+	table.set(6, 7.3);
+	table.set(7, 7.8);
+	table.set(8, 8.3);
+	table.set(9, 8.8);
+	table.set(10, 9.4);
+	table.set(11, 10.1);
+	table.set(12, 10.7);
+	table.set(13, 11.4);
+	table.set(14, 12.1);
+	table.set(15, 12.8);
+	table.set(16, 13.6);
+	table.set(17, 14.5);
+	table.set(18, 15.4);
+	table.set(19, 16.3);
+	table.set(20, 17.3);
+	table.set(21, 18.3);
+	table.set(22, 19.4);
+	table.set(23, 20.6);
+	table.set(24, 21.8);
+	table.set(25, 23.0);
+	table.set(26, 24.4);
+	table.set(27, 25.8);
+	table.set(28, 27.2);
+	table.set(29, 28.7);
+	table.set(30, 30.3);
+	table.set(31, 32.1);
+	table.set(32, 33.9);
+	table.set(33, 35.7);
+	table.set(34, 37.6);
+	table.set(35, 39.6);
+	table.set(36, 41.8);
+	table.set(37, 44);
+	table.set(38, 46.3);
+	table.set(39, 48.7);
+	table.set(40, 65.4); // 3.52
+	table.set(41, 68.6); // 3.52
+	table.set(42, 71.8); // 3.52
+	table.set(43, 75.3); // 3.52
+	table.set(44, 78.82); // 3.52
+	table.set(45, 83.0); // 4.26
+	table.set(46, 87.26); // 4.26
+	table.set(47, 91.52); // 4.26
+	table.set(48, 95.78); // 4.26
+	table.set(49, 100.04); // 4.26
+	table.set(50, 104.3); // 5.14
+	table.set(51, 109.44); // 5.14
+	table.set(52, 114.58); // 5.14
+	table.set(53, 119.72); // 5.14
+	table.set(54, 124.86); // 5.14
+	table.set(55, 130); // 6.2
+	table.set(56, 136.2); // 6.2
+	table.set(57, 142.4); // 6.2
+	table.set(58, 148.6); // 6.2
+	table.set(59, 154.8); // 6.2
+	table.set(60, 161); // 7.4
+	table.set(61, 168.4); // 7.4
+	table.set(62, 175.8); // 7.4
+	table.set(63, 183.2); // 7.4
+	table.set(64, 190.6); // 7.4
+	table.set(65, 198); // 8.8
+	table.set(66, 206.8); // 8.8
+	table.set(67, 215.6); // 8.8
+	table.set(68, 224.4); // 8.8
+	table.set(69, 233.2); // 8.8
+	table.set(70, 242);
+	exports.default = table;
 
 /***/ })
 
 });
-//# sourceMappingURL=component---src-pages-404-tsx-fb1d09bde2f0993aa412.js.map
+//# sourceMappingURL=component---src-pages-index-tsx-a130067b203466bf5594.js.map

@@ -65,19 +65,19 @@ webpackJsonp([231608221292675],{
 	};
 	
 	exports.components = {
-	  "component---src-pages-404-tsx": __webpack_require__(313),
-	  "component---src-pages-index-tsx": __webpack_require__(314)
+	  "component---src-pages-404-tsx": __webpack_require__(312),
+	  "component---src-pages-index-tsx": __webpack_require__(313)
 	};
 	
 	exports.json = {
-	  "layout-index.json": __webpack_require__(315),
-	  "404.json": __webpack_require__(316),
-	  "index.json": __webpack_require__(318),
-	  "404-html.json": __webpack_require__(317)
+	  "layout-index.json": __webpack_require__(314),
+	  "404.json": __webpack_require__(315),
+	  "index.json": __webpack_require__(317),
+	  "404-html.json": __webpack_require__(316)
 	};
 	
 	exports.layouts = {
-	  "layout---index": __webpack_require__(312)
+	  "layout---index": __webpack_require__(311)
 	};
 
 /***/ }),
@@ -109,7 +109,7 @@ webpackJsonp([231608221292675],{
 	
 	var _apiRunnerBrowser = __webpack_require__(73);
 	
-	var _shallowCompare = __webpack_require__(438);
+	var _shallowCompare = __webpack_require__(437);
 	
 	var _shallowCompare2 = _interopRequireDefault(_shallowCompare);
 	
@@ -281,7 +281,7 @@ webpackJsonp([231608221292675],{
 
 	"use strict";
 	
-	var _mitt = __webpack_require__(334);
+	var _mitt = __webpack_require__(333);
 	
 	var _mitt2 = _interopRequireDefault(_mitt);
 	
@@ -377,7 +377,7 @@ webpackJsonp([231608221292675],{
 
 	"use strict";
 	
-	var _createBrowserHistory = __webpack_require__(325);
+	var _createBrowserHistory = __webpack_require__(324);
 	
 	var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
 	
@@ -392,13 +392,32 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 317:
+/***/ 316:
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(
 	      25
 	    );
 	    module.exports = function(cb) { return __webpack_require__.e/* nsure */(178698757827068, function(_, error) {
+	        if (error) {
+	          console.log('bundle loading error', error)
+	          cb(true)
+	        } else {
+	          cb(null, function() { return __webpack_require__(328) })
+	        }
+	      });
+	     }
+	    
+
+/***/ }),
+
+/***/ 315:
+/***/ (function(module, exports, __webpack_require__) {
+
+	__webpack_require__(
+	      25
+	    );
+	    module.exports = function(cb) { return __webpack_require__.e/* nsure */(254022195166212, function(_, error) {
 	        if (error) {
 	          console.log('bundle loading error', error)
 	          cb(true)
@@ -411,13 +430,13 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 316:
+/***/ 317:
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(
 	      25
 	    );
-	    module.exports = function(cb) { return __webpack_require__.e/* nsure */(254022195166212, function(_, error) {
+	    module.exports = function(cb) { return __webpack_require__.e/* nsure */(142629428675168, function(_, error) {
 	        if (error) {
 	          console.log('bundle loading error', error)
 	          cb(true)
@@ -430,26 +449,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 318:
-/***/ (function(module, exports, __webpack_require__) {
-
-	__webpack_require__(
-	      25
-	    );
-	    module.exports = function(cb) { return __webpack_require__.e/* nsure */(142629428675168, function(_, error) {
-	        if (error) {
-	          console.log('bundle loading error', error)
-	          cb(true)
-	        } else {
-	          cb(null, function() { return __webpack_require__(331) })
-	        }
-	      });
-	     }
-	    
-
-/***/ }),
-
-/***/ 315:
+/***/ 314:
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(
@@ -468,7 +468,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 312:
+/***/ 311:
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(
@@ -924,7 +924,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 332:
+/***/ 331:
 /***/ (function(module, exports) {
 
 	module.exports = [{"componentChunkName":"component---src-pages-404-tsx","layout":"layout---index","layoutComponentChunkName":"component---src-layouts-index-tsx","jsonName":"404.json","path":"/404/"},{"componentChunkName":"component---src-pages-index-tsx","layout":"layout---index","layoutComponentChunkName":"component---src-layouts-index-tsx","jsonName":"index.json","path":"/"},{"componentChunkName":"component---src-pages-404-tsx","layout":"layout---index","layoutComponentChunkName":"component---src-layouts-index-tsx","jsonName":"404-html.json","path":"/404.html"}]
@@ -1033,9 +1033,9 @@ webpackJsonp([231608221292675],{
 	
 	var _reactRouterDom = __webpack_require__(72);
 	
-	var _gatsbyReactRouterScroll = __webpack_require__(322);
+	var _gatsbyReactRouterScroll = __webpack_require__(321);
 	
-	var _domready = __webpack_require__(297);
+	var _domready = __webpack_require__(296);
 	
 	var _domready2 = _interopRequireDefault(_domready);
 	
@@ -1049,11 +1049,11 @@ webpackJsonp([231608221292675],{
 	
 	var _emitter2 = _interopRequireDefault(_emitter);
 	
-	var _pages = __webpack_require__(332);
+	var _pages = __webpack_require__(331);
 	
 	var _pages2 = _interopRequireDefault(_pages);
 	
-	var _redirects = __webpack_require__(333);
+	var _redirects = __webpack_require__(332);
 	
 	var _redirects2 = _interopRequireDefault(_redirects);
 	
@@ -1072,7 +1072,7 @@ webpackJsonp([231608221292675],{
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	if (true) {
-	  __webpack_require__(222);
+	  __webpack_require__(221);
 	}
 	
 	window.___history = _history3.default;
@@ -1267,7 +1267,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 333:
+/***/ 332:
 /***/ (function(module, exports) {
 
 	module.exports = []
@@ -2296,7 +2296,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 297:
+/***/ 296:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*!
@@ -2422,7 +2422,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 327:
+/***/ 326:
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -2497,7 +2497,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 334:
+/***/ 333:
 /***/ (function(module, exports) {
 
 	function n(n){return n=n||Object.create(null),{on:function(c,e){(n[c]||(n[c]=[])).push(e)},off:function(c,e){n[c]&&n[c].splice(n[c].indexOf(e)>>>0,1)},emit:function(c,e){(n[c]||[]).slice().map(function(n){n(e)}),(n["*"]||[]).slice().map(function(n){n(c,e)})}}}module.exports=n;
@@ -2829,7 +2829,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 438:
+/***/ 437:
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2853,7 +2853,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 440:
+/***/ 439:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2875,7 +2875,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 441:
+/***/ 440:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2904,7 +2904,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 313:
+/***/ 312:
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(
@@ -2915,7 +2915,7 @@ webpackJsonp([231608221292675],{
 	          console.log('bundle loading error', error)
 	          cb(true)
 	        } else {
-	          cb(null, function() { return __webpack_require__(210) })
+	          cb(null, function() { return __webpack_require__(209) })
 	        }
 	      });
 	     }
@@ -2923,7 +2923,7 @@ webpackJsonp([231608221292675],{
 
 /***/ }),
 
-/***/ 314:
+/***/ 313:
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(
@@ -2934,7 +2934,7 @@ webpackJsonp([231608221292675],{
 	          console.log('bundle loading error', error)
 	          cb(true)
 	        } else {
-	          cb(null, function() { return __webpack_require__(211) })
+	          cb(null, function() { return __webpack_require__(210) })
 	        }
 	      });
 	     }
