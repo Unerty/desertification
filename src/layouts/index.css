@@ -26,7 +26,7 @@ strong {
   padding: 1.5rem;
 }
 
-.inputs {
+.group-of-cards {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 20px;
@@ -61,25 +61,25 @@ strong {
 }
 
 @media only screen and (max-width: 768px) {
-  .inputs {
+  .group-of-cards {
     grid-template-columns: 1fr;
   }
 }
 
 @media only screen and (min-width: 769px) and (max-width: 1200px) {
-  .inputs {
+  .group-of-cards {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media only screen and (min-width: 1201px) and (max-width: 1599px) {
-  .inputs {
+  .group-of-cards {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
 @media only screen and (min-width: 1600px) {
-  .inputs {
+  .group-of-cards {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }

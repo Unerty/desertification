@@ -55,7 +55,7 @@ export default class extends React.Component<IProps, IState> {
     return (
       <div>
         <h1>Input Data</h1>
-        <div className={"inputs"}>
+        <div className={"group-of-cards"}>
           <TerritoryInput territory={this.state.territory}
                           onInput={(event: any) => this.setState({ territory: event.target.value })}/>
           <TemperatureInput temperature={this.state.averageTemperature}
@@ -74,7 +74,7 @@ export default class extends React.Component<IProps, IState> {
                              onInput={(event: any) => this.setState({ bushesAmount: event.target.value })}/>
         </div>
         <h1>Counted Results</h1>
-        <div className={"counted-results"}>
+        <div className={"group-of-cards"}>
         </div>
       </div>
     );
