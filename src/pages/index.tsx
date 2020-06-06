@@ -56,22 +56,22 @@ export default class extends React.Component<IProps, IState> {
       cactooAmount: 5000,
       precipation: 150,
       additionalWatering: VOLGA_RIVER_YEARLY_WATERFLOW,
-      waterAmount: 13500,
+      waterAmount: 13,
       relativeHumidity: 0, // non-input
       volatility: 0, // non-input
       absoluteHumidity: 0 // non-input
     };
   }
 
-  countAbsoluteHumidity = async (): Promise<number> => await (this.state.treeAmount * TREE_VAPORIZES_PER_DAY/CLOUD_HEIGHT * 365.25  + this.state.cactooAmount * CACTOO_VAPORIZES_PER_YEAR/CLOUD_HEIGHT) / (this.state.territory*CLOUD_HEIGHT); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
-
+  countAbsoluteHumidity = async (): Promise<number> => {
+    console.log(this.state.waterAmount*waterVaporizingCoefficient(this.state.averageTemperature));
+    console.log(this.state.treeAmount * TREE_VAPORIZES_PER_DAY/CLOUD_HEIGHT * 365.25 + this.state.cactooAmount * CACTOO_VAPORIZES_PER_YEAR/CLOUD_HEIGHT);
+    return await ((Number(this.state.treeAmount * TREE_VAPORIZES_PER_DAY/CLOUD_HEIGHT * 365.25  + this.state.cactooAmount * CACTOO_VAPORIZES_PER_YEAR/CLOUD_HEIGHT)) + Number(this.state.waterAmount)*waterVaporizingCoefficient(this.state.averageTemperature)*50) / (this.state.territory*CLOUD_HEIGHT); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
+  };
   countRelativeHumidity = async (): Promise<number> => await (await this.countAbsoluteHumidity() / saturationVaporDensity(this.state.averageTemperature)); // https://www.yaklass.ru/p/fizika/8-klass/izmenenie-sostoianiia-veshchestva-141552/otnositelnaia-vlazhnost-vozdukha-i-ee-izmerenie-189576/re-18d24d91-b778-4262-983f-4e1101acae16
 
   countVolatility = async (): Promise<number> => {
     const addedAverageTemperature = 25 + this.state.averageTemperature;
-    console.log(`addedAverageTemperature: ${addedAverageTemperature}`);
-    console.log(`pow result: ${(Math.pow((addedAverageTemperature), 2))}`);
-    console.log(`100 - rel.hum.: ${100 - await this.countRelativeHumidity()}`);
     return await ((0.01 * Math.pow(addedAverageTemperature, 2)) * (100 - await this.countRelativeHumidity()));// volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
   };
 
@@ -88,7 +88,6 @@ export default class extends React.Component<IProps, IState> {
   countWaterIncome = async (): Promise<number> => await (this.state.precipation + (1000 * (this.state.additionalWatering / this.state.territory)));
 
   public render() {
-    console.log(waterVaporizingCoefficient(30));
     return (
       <div>
         <h1>Input Data</h1>
