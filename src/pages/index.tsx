@@ -7,6 +7,7 @@ import BushesAmountInput from "../components/BushesAmountInput";
 import TreeCuttingInput from "../components/TreeCuttingInput";
 import TreePlantingInput from "../components/TreePlantingInput";
 import PrecipationInput from "../components/PrecipationInput";
+import AdditionalWateringInput from "../components/AdditionalWateringInput";
 
 interface IProps {
 }
@@ -20,7 +21,7 @@ interface IState {
   bushesAmount: number; // INPUT Amount of trees on the territory
   precipation: number; // INPUT Measured in mm. Sahara: 25-200, Kalahari: 100-500, Atakama: 25
   additionalWatering: number; // INPUT Measured in mm. Is added to precipation. May be a river or whatever
-  relativeHumidity: number; //
+  relativeHumidity: number; // absoluteHumidity/saturationVaporDensity
   volatility: number; // How much humidity (in mm) is able to vaporize from all the surface
   absoluteHumidity: number; // Measured in grams per one meter cubic of air
 }
@@ -61,6 +62,8 @@ export default class extends React.Component<IProps, IState> {
                             onInput={(event: any) => this.setState({ averageTemperature: event.target.value })}/>
           <PrecipationInput precipation={this.state.precipation}
                             onInput={(event: any) => this.setState({ precipation: event.target.value })}/>
+          <AdditionalWateringInput additionalWatering={this.state.additionalWatering}
+                                   onInput={(event: any) => this.setState({ additionalWatering: event.target.value })}/>
           <TreeAmountInput treeAmount={this.state.treeAmount}
                            onInput={(event: any) => this.setState({ treeAmount: event.target.value })}/>
           <TreeCuttingInput treeCutting={this.state.treeCutting}
