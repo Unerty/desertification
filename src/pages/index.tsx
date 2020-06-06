@@ -5,6 +5,7 @@ import TerritoryInput from "../components/TerritoryInput";
 import TreeAmountInput from "../components/TreeAmountInput";
 import BushesAmountInput from "../components/BushesAmountInput";
 import TreeCuttingInput from "../components/TreeCuttingInput";
+import TreePlantingInput from "../components/TreePlantingInput";
 
 interface IProps {
 }
@@ -13,9 +14,9 @@ interface IState {
   territory: number; // INPUT Area in square kilometres
   averageTemperature: number; // INPUT Average yearly temperature
   treeAmount: number; // INPUT Amount of trees on the territory
-  bushesAmount: number; // INPUT Amount of trees on the territory
   treeCutting: number; // INPUT How much of trees is cut every year
   treePlanting: number; // INPUT Trees planted per year
+  bushesAmount: number; // INPUT Amount of trees on the territory
   precipation: number; // INPUT Measured in mm. Sahara: 25-200, Kalahari: 100-500, Atakama: 25
   additionalWatering: number; // INPUT Measured in mm. Is added to precipation. May be a river or whatever
   relativeHumidity: number; //
@@ -31,9 +32,9 @@ export default class extends React.Component<IProps, IState> {
       territory: 35000, // Area of Mojave desert in square kilometres
       averageTemperature: 25, // Avg temp of Mojave Desert
       treeAmount: 3000,
-      bushesAmount: 5000,
       treeCutting: 0,
       treePlanting: 0,
+      bushesAmount: 5000,
       precipation: 150,
       additionalWatering: 0,
       relativeHumidity: 0, // non-input
@@ -59,6 +60,8 @@ export default class extends React.Component<IProps, IState> {
                            onInput={(event: any) => this.setState({ treeAmount: event.target.value })}/>
           <TreeCuttingInput treeCutting={this.state.treeCutting}
                            onInput={(event: any) => this.setState({ treeCutting: event.target.value })}/>
+          <TreePlantingInput treePlanting={this.state.treePlanting}
+                            onInput={(event: any) => this.setState({ treePlanting: event.target.value })}/>
           <BushesAmountInput bushesAmount={this.state.bushesAmount}
                              onInput={(event: any) => this.setState({ bushesAmount: event.target.value })}/>
           <TemperatureInput temperature={this.state.averageTemperature}
