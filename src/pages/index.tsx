@@ -1,7 +1,11 @@
 // https://cyberleninka.ru/article/n/dnevnoy-rashod-vody-na-transpiratsiyu-tselym-drevesnym-rasteniem
+// https://studfile.net/preview/5707905/page:3/ - about volatility
+// http://sun.tsu.ru/mminfo/000063105/274/image/274-136.pdf and http://www.kovas.ru/pdf1/40.pdf about water vaporizing
+// (0.172*24*365.25)*1000
+
 
 import * as React from "react";
-import { saturationVaporDensity } from "../functions";
+import { saturationVaporDensity, waterVaporizingCoefficient } from "../functions";
 import TemperatureInput from "../components/inputs/TemperatureInput";
 import TerritoryInput from "../components/inputs/TerritoryInput";
 import TreeAmountInput from "../components/inputs/TreeAmountInput";
@@ -13,8 +17,13 @@ import AdditionalWateringInput from "../components/inputs/AdditionalWateringInpu
 import RelativeHumidity from "../components/countedResults/RelativeHumidity";
 import AbsoluteHumidity from "../components/countedResults/AbsoluteHumidity";
 import Volatility from "../components/countedResults/Volatility";
+import WaterAmountInput from "../components/inputs/WaterAmountInput";
 
-const CACTOO_VAPORIZES = 2750; // liters per year per gektar
+const CACTOO_VAPORIZES_PER_YEAR = 6000; // grams per year https://books.google.com.ua/books?id=cgo0ukOa_gIC&pg=PA9&lpg=PA9&dq=%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE+%D0%BA%D0%B0%D0%BA%D1%82%D1%83%D1%81%D0%BE%D0%B2+%D0%B2+%D0%BE%D0%B4%D0%BD%D0%BE%D0%B9+%D0%BF%D1%83%D1%81%D1%82%D1%8B%D0%BD%D0%B5&source=bl&ots=6FQXLOTKi6&sig=ACfU3U3f1b84bYd4NhgYaQFfiwywuMDKxQ&hl=ru&sa=X&ved=2ahUKEwid-7aZ2O3pAhWnk4sKHcG3BW8Q6AEwBXoECAkQAQ#v=onepage&q=%D0%B8%D1%81%D0%BF%D0%B0%D1%80%D1%8F%D0%B5%D1%82%20%D0%BA%D0%B0%D0%BA%D1%82%D1%83%D1%81&f=false
+const TREE_VAPORIZES_PER_DAY = 400000; //grams per day https://cyberleninka.ru/article/n/dnevnoy-rashod-vody-na-transpiratsiyu-tselym-drevesnym-rasteniem
+const CLOUD_HEIGHT = 5000; // meters https://public.wmo.int/ru/%D0%B2%D1%81%D0%B5%D0%BC%D0%B8%D1%80%D0%BD%D1%8B%D0%B9-%D0%BC%D0%B5%D1%82%D0%B5%D0%BE%D1%80%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9-%D0%B4%D0%B5%D0%BD%D1%8C-2017-%D0%B3/%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F-%D0%BE%D0%B1%D0%BB%D0%B0%D0%BA%D0%BE%D0%B2#:~:text=%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BE%D0%B1%D0%BB%D0%B0%D0%BA%D0%BE%D0%B2%20%D0%B2%D0%B5%D1%80%D1%85%D0%BD%D0%B5%D0%B3%D0%BE%20%D1%8F%D1%80%D1%83%D1%81%D0%B0%2C%20%D0%BA%D0%B0%D0%BA,%D0%BC%D0%B5%D1%82%D1%80%D0%BE%D0%B2%20(6%20500%20%D1%84%D1%83%D1%82%D0%BE%D0%B2).
+const DESERT_HUMIDIFICATION_INDEX = 0.15; // something is a desert if (precipation + extra water) / volatility < 0.15 https://ru.wikipedia.org/wiki/%D0%9F%D1%83%D1%81%D1%82%D1%8B%D0%BD%D1%8F
+const VOLGA_RIVER_YEARLY_WATERFLOW = 254; // km3/year (8060 m3/sec) https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D1%80%D0%B5%D0%BA_%D0%BF%D0%BE_%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B2%D0%BE%D0%B4%D0%BD%D0%BE%D1%81%D1%82%D0%B8
 
 interface IProps {
 }
@@ -27,6 +36,7 @@ interface IState {
   treePlanting: number; // INPUT Trees planted per year
   cactooAmount: number; // INPUT Amount of trees on the territory
   precipation: number; // INPUT Measured in mm. Sahara: 25-200, Kalahari: 100-500, Atakama: 25
+  waterAmount: number // INPUT Measured in square kilometres
   additionalWatering: number; // INPUT Measured in mm. Is added to precipation. May be a river or whatever
   relativeHumidity: number; // absoluteHumidity/saturationVaporDensity
   volatility: number; // How much humidity (in mm) is able to vaporize from all the surface
@@ -45,14 +55,15 @@ export default class extends React.Component<IProps, IState> {
       treePlanting: 0,
       cactooAmount: 5000,
       precipation: 150,
-      additionalWatering: 0,
+      additionalWatering: VOLGA_RIVER_YEARLY_WATERFLOW,
+      waterAmount: 13500,
       relativeHumidity: 0, // non-input
       volatility: 0, // non-input
       absoluteHumidity: 0 // non-input
     };
   }
 
-  countAbsoluteHumidity = async (): Promise<number> => await (this.state.treeAmount * 365.25 + this.state.cactooAmount * 365.25) / this.state.territory; // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
+  countAbsoluteHumidity = async (): Promise<number> => await (this.state.treeAmount * TREE_VAPORIZES_PER_DAY/CLOUD_HEIGHT * 365.25  + this.state.cactooAmount * CACTOO_VAPORIZES_PER_YEAR/CLOUD_HEIGHT) / (this.state.territory*CLOUD_HEIGHT); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
 
   countRelativeHumidity = async (): Promise<number> => await (await this.countAbsoluteHumidity() / saturationVaporDensity(this.state.averageTemperature)); // https://www.yaklass.ru/p/fizika/8-klass/izmenenie-sostoianiia-veshchestva-141552/otnositelnaia-vlazhnost-vozdukha-i-ee-izmerenie-189576/re-18d24d91-b778-4262-983f-4e1101acae16
 
@@ -74,8 +85,10 @@ export default class extends React.Component<IProps, IState> {
     this.setAbsoluteHumidity().then(this.setRelativeHumidity).then(this.setVolatility).then(this.setRelativeHumidity).then(this.setAbsoluteHumidity);
   };
 
+  countWaterIncome = async (): Promise<number> => await (this.state.precipation + (1000 * (this.state.additionalWatering / this.state.territory)));
 
   public render() {
+    console.log(waterVaporizingCoefficient(30));
     return (
       <div>
         <h1>Input Data</h1>
@@ -83,6 +96,11 @@ export default class extends React.Component<IProps, IState> {
           <TerritoryInput territory={this.state.territory}
                           onInput={(event: any) => {
                             this.setState({ territory: Number(event.target.value) });
+                            this.setCountedResults();
+                          }}/>
+          <WaterAmountInput waterAmount={this.state.waterAmount}
+                          onInput={(event: any) => {
+                            this.setState({ waterAmount: Number(event.target.value) });
                             this.setCountedResults();
                           }}/>
           <TemperatureInput temperature={this.state.averageTemperature}
