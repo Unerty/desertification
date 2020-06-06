@@ -9,7 +9,10 @@
     "gatsby": "^1.9.119",
     "gatsby-link": "^1.6.28",
     "gatsby-plugin-react-helmet": "^1.0.8",
-    "gatsby-plugin-typescript": "^1.4.10"
+    "gatsby-plugin-typescript": "^1.4.10",
+    "preact": "^10.4.4",
+    "preact-compat": "^3.19.0",
+    "preact-router": "^3.2.1"
   },
   "keywords": [
     "gatsby, typescript"
@@ -26,6 +29,8 @@
   },
   "devDependencies": {
     "gh-pages": "^3.0.0",
+    "preact-cli": "^2.2.1",
+    "preact-cli-plugin-fast-async": "^1.0.1",
     "prettier": "^1.8.2"
   }
 }
