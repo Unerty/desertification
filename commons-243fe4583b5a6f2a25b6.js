@@ -290,7 +290,7 @@
 	var _prodInvariant = __webpack_require__(3);
 	
 	var DOMProperty = __webpack_require__(37);
-	var ReactDOMComponentFlags = __webpack_require__(158);
+	var ReactDOMComponentFlags = __webpack_require__(159);
 	
 	var invariant = __webpack_require__(1);
 	
@@ -654,9 +654,9 @@
 	var _prodInvariant = __webpack_require__(3),
 	    _assign = __webpack_require__(5);
 	
-	var CallbackQueue = __webpack_require__(156);
+	var CallbackQueue = __webpack_require__(157);
 	var PooledClass = __webpack_require__(26);
-	var ReactFeatureFlags = __webpack_require__(161);
+	var ReactFeatureFlags = __webpack_require__(162);
 	var ReactReconciler = __webpack_require__(38);
 	var Transaction = __webpack_require__(69);
 	
@@ -1705,7 +1705,7 @@
 	var setInnerHTML = __webpack_require__(71);
 	
 	var createMicrosoftUnsafeLocalFunction = __webpack_require__(113);
-	var setTextContent = __webpack_require__(174);
+	var setTextContent = __webpack_require__(175);
 	
 	var ELEMENT_NODE_TYPE = 1;
 	var DOCUMENT_FRAGMENT_NODE_TYPE = 11;
@@ -2771,8 +2771,8 @@
 	var EventPluginUtils = __webpack_require__(107);
 	var ReactErrorUtils = __webpack_require__(111);
 	
-	var accumulateInto = __webpack_require__(167);
-	var forEachAccumulated = __webpack_require__(168);
+	var accumulateInto = __webpack_require__(168);
+	var forEachAccumulated = __webpack_require__(169);
 	var invariant = __webpack_require__(1);
 	
 	/**
@@ -3044,8 +3044,8 @@
 	var EventPluginHub = __webpack_require__(48);
 	var EventPluginUtils = __webpack_require__(107);
 	
-	var accumulateInto = __webpack_require__(167);
-	var forEachAccumulated = __webpack_require__(168);
+	var accumulateInto = __webpack_require__(168);
+	var forEachAccumulated = __webpack_require__(169);
 	var warning = __webpack_require__(4);
 	
 	var getListener = EventPluginHub.getListener;
@@ -3525,7 +3525,7 @@
 	
 	var EventPluginRegistry = __webpack_require__(106);
 	var ReactEventEmitterMixin = __webpack_require__(363);
-	var ViewportMetrics = __webpack_require__(166);
+	var ViewportMetrics = __webpack_require__(167);
 	
 	var getVendorPrefixedEventName = __webpack_require__(395);
 	var isEventSupported = __webpack_require__(117);
@@ -3848,7 +3848,7 @@
 	'use strict';
 	
 	var SyntheticUIEvent = __webpack_require__(51);
-	var ViewportMetrics = __webpack_require__(166);
+	var ViewportMetrics = __webpack_require__(167);
 	
 	var getEventModifierState = __webpack_require__(115);
 	
@@ -4378,7 +4378,7 @@
 	
 	var _HashRouter3 = _interopRequireDefault(_HashRouter2);
 	
-	var _Link2 = __webpack_require__(177);
+	var _Link2 = __webpack_require__(178);
 	
 	var _Link3 = _interopRequireDefault(_Link2);
 	
@@ -4398,7 +4398,7 @@
 	
 	var _Redirect3 = _interopRequireDefault(_Redirect2);
 	
-	var _Route2 = __webpack_require__(178);
+	var _Route2 = __webpack_require__(179);
 	
 	var _Route3 = _interopRequireDefault(_Route2);
 	
@@ -4949,7 +4949,7 @@
 	
 	var createMicrosoftUnsafeLocalFunction = __webpack_require__(113);
 	var setInnerHTML = __webpack_require__(71);
-	var setTextContent = __webpack_require__(174);
+	var setTextContent = __webpack_require__(175);
 	
 	function getNodeAfter(parentNode, node) {
 	  // Special case for text components, which return [open, close] comments
@@ -5739,7 +5739,7 @@
 	var _prodInvariant = __webpack_require__(3);
 	
 	var ReactPropTypesSecret = __webpack_require__(369);
-	var propTypesFactory = __webpack_require__(152);
+	var propTypesFactory = __webpack_require__(153);
 	
 	var React = __webpack_require__(39);
 	var PropTypes = propTypesFactory(React.isValidElement);
@@ -7020,7 +7020,7 @@
 	
 	exports.__esModule = true;
 	
-	var _pathToRegexp = __webpack_require__(181);
+	var _pathToRegexp = __webpack_require__(152);
 	
 	var _pathToRegexp2 = _interopRequireDefault(_pathToRegexp);
 	
@@ -7785,6 +7785,438 @@
 /* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
+	var isarray = __webpack_require__(331)
+	
+	/**
+	 * Expose `pathToRegexp`.
+	 */
+	module.exports = pathToRegexp
+	module.exports.parse = parse
+	module.exports.compile = compile
+	module.exports.tokensToFunction = tokensToFunction
+	module.exports.tokensToRegExp = tokensToRegExp
+	
+	/**
+	 * The main path matching regexp utility.
+	 *
+	 * @type {RegExp}
+	 */
+	var PATH_REGEXP = new RegExp([
+	  // Match escaped characters that would otherwise appear in future matches.
+	  // This allows the user to escape special characters that won't transform.
+	  '(\\\\.)',
+	  // Match Express-style parameters and un-named parameters with a prefix
+	  // and optional suffixes. Matches appear as:
+	  //
+	  // "/:test(\\d+)?" => ["/", "test", "\d+", undefined, "?", undefined]
+	  // "/route(\\d+)"  => [undefined, undefined, undefined, "\d+", undefined, undefined]
+	  // "/*"            => ["/", undefined, undefined, undefined, undefined, "*"]
+	  '([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?|(\\*))'
+	].join('|'), 'g')
+	
+	/**
+	 * Parse a string for the raw tokens.
+	 *
+	 * @param  {string}  str
+	 * @param  {Object=} options
+	 * @return {!Array}
+	 */
+	function parse (str, options) {
+	  var tokens = []
+	  var key = 0
+	  var index = 0
+	  var path = ''
+	  var defaultDelimiter = options && options.delimiter || '/'
+	  var res
+	
+	  while ((res = PATH_REGEXP.exec(str)) != null) {
+	    var m = res[0]
+	    var escaped = res[1]
+	    var offset = res.index
+	    path += str.slice(index, offset)
+	    index = offset + m.length
+	
+	    // Ignore already escaped sequences.
+	    if (escaped) {
+	      path += escaped[1]
+	      continue
+	    }
+	
+	    var next = str[index]
+	    var prefix = res[2]
+	    var name = res[3]
+	    var capture = res[4]
+	    var group = res[5]
+	    var modifier = res[6]
+	    var asterisk = res[7]
+	
+	    // Push the current path onto the tokens.
+	    if (path) {
+	      tokens.push(path)
+	      path = ''
+	    }
+	
+	    var partial = prefix != null && next != null && next !== prefix
+	    var repeat = modifier === '+' || modifier === '*'
+	    var optional = modifier === '?' || modifier === '*'
+	    var delimiter = res[2] || defaultDelimiter
+	    var pattern = capture || group
+	
+	    tokens.push({
+	      name: name || key++,
+	      prefix: prefix || '',
+	      delimiter: delimiter,
+	      optional: optional,
+	      repeat: repeat,
+	      partial: partial,
+	      asterisk: !!asterisk,
+	      pattern: pattern ? escapeGroup(pattern) : (asterisk ? '.*' : '[^' + escapeString(delimiter) + ']+?')
+	    })
+	  }
+	
+	  // Match any characters still remaining.
+	  if (index < str.length) {
+	    path += str.substr(index)
+	  }
+	
+	  // If the path exists, push it onto the end.
+	  if (path) {
+	    tokens.push(path)
+	  }
+	
+	  return tokens
+	}
+	
+	/**
+	 * Compile a string to a template function for the path.
+	 *
+	 * @param  {string}             str
+	 * @param  {Object=}            options
+	 * @return {!function(Object=, Object=)}
+	 */
+	function compile (str, options) {
+	  return tokensToFunction(parse(str, options), options)
+	}
+	
+	/**
+	 * Prettier encoding of URI path segments.
+	 *
+	 * @param  {string}
+	 * @return {string}
+	 */
+	function encodeURIComponentPretty (str) {
+	  return encodeURI(str).replace(/[\/?#]/g, function (c) {
+	    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+	  })
+	}
+	
+	/**
+	 * Encode the asterisk parameter. Similar to `pretty`, but allows slashes.
+	 *
+	 * @param  {string}
+	 * @return {string}
+	 */
+	function encodeAsterisk (str) {
+	  return encodeURI(str).replace(/[?#]/g, function (c) {
+	    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+	  })
+	}
+	
+	/**
+	 * Expose a method for transforming tokens into the path function.
+	 */
+	function tokensToFunction (tokens, options) {
+	  // Compile all the tokens into regexps.
+	  var matches = new Array(tokens.length)
+	
+	  // Compile all the patterns before compilation.
+	  for (var i = 0; i < tokens.length; i++) {
+	    if (typeof tokens[i] === 'object') {
+	      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$', flags(options))
+	    }
+	  }
+	
+	  return function (obj, opts) {
+	    var path = ''
+	    var data = obj || {}
+	    var options = opts || {}
+	    var encode = options.pretty ? encodeURIComponentPretty : encodeURIComponent
+	
+	    for (var i = 0; i < tokens.length; i++) {
+	      var token = tokens[i]
+	
+	      if (typeof token === 'string') {
+	        path += token
+	
+	        continue
+	      }
+	
+	      var value = data[token.name]
+	      var segment
+	
+	      if (value == null) {
+	        if (token.optional) {
+	          // Prepend partial segment prefixes.
+	          if (token.partial) {
+	            path += token.prefix
+	          }
+	
+	          continue
+	        } else {
+	          throw new TypeError('Expected "' + token.name + '" to be defined')
+	        }
+	      }
+	
+	      if (isarray(value)) {
+	        if (!token.repeat) {
+	          throw new TypeError('Expected "' + token.name + '" to not repeat, but received `' + JSON.stringify(value) + '`')
+	        }
+	
+	        if (value.length === 0) {
+	          if (token.optional) {
+	            continue
+	          } else {
+	            throw new TypeError('Expected "' + token.name + '" to not be empty')
+	          }
+	        }
+	
+	        for (var j = 0; j < value.length; j++) {
+	          segment = encode(value[j])
+	
+	          if (!matches[i].test(segment)) {
+	            throw new TypeError('Expected all "' + token.name + '" to match "' + token.pattern + '", but received `' + JSON.stringify(segment) + '`')
+	          }
+	
+	          path += (j === 0 ? token.prefix : token.delimiter) + segment
+	        }
+	
+	        continue
+	      }
+	
+	      segment = token.asterisk ? encodeAsterisk(value) : encode(value)
+	
+	      if (!matches[i].test(segment)) {
+	        throw new TypeError('Expected "' + token.name + '" to match "' + token.pattern + '", but received "' + segment + '"')
+	      }
+	
+	      path += token.prefix + segment
+	    }
+	
+	    return path
+	  }
+	}
+	
+	/**
+	 * Escape a regular expression string.
+	 *
+	 * @param  {string} str
+	 * @return {string}
+	 */
+	function escapeString (str) {
+	  return str.replace(/([.+*?=^!:${}()[\]|\/\\])/g, '\\$1')
+	}
+	
+	/**
+	 * Escape the capturing group by escaping special characters and meaning.
+	 *
+	 * @param  {string} group
+	 * @return {string}
+	 */
+	function escapeGroup (group) {
+	  return group.replace(/([=!:$\/()])/g, '\\$1')
+	}
+	
+	/**
+	 * Attach the keys as a property of the regexp.
+	 *
+	 * @param  {!RegExp} re
+	 * @param  {Array}   keys
+	 * @return {!RegExp}
+	 */
+	function attachKeys (re, keys) {
+	  re.keys = keys
+	  return re
+	}
+	
+	/**
+	 * Get the flags for a regexp from the options.
+	 *
+	 * @param  {Object} options
+	 * @return {string}
+	 */
+	function flags (options) {
+	  return options && options.sensitive ? '' : 'i'
+	}
+	
+	/**
+	 * Pull out keys from a regexp.
+	 *
+	 * @param  {!RegExp} path
+	 * @param  {!Array}  keys
+	 * @return {!RegExp}
+	 */
+	function regexpToRegexp (path, keys) {
+	  // Use a negative lookahead to match only capturing groups.
+	  var groups = path.source.match(/\((?!\?)/g)
+	
+	  if (groups) {
+	    for (var i = 0; i < groups.length; i++) {
+	      keys.push({
+	        name: i,
+	        prefix: null,
+	        delimiter: null,
+	        optional: false,
+	        repeat: false,
+	        partial: false,
+	        asterisk: false,
+	        pattern: null
+	      })
+	    }
+	  }
+	
+	  return attachKeys(path, keys)
+	}
+	
+	/**
+	 * Transform an array into a regexp.
+	 *
+	 * @param  {!Array}  path
+	 * @param  {Array}   keys
+	 * @param  {!Object} options
+	 * @return {!RegExp}
+	 */
+	function arrayToRegexp (path, keys, options) {
+	  var parts = []
+	
+	  for (var i = 0; i < path.length; i++) {
+	    parts.push(pathToRegexp(path[i], keys, options).source)
+	  }
+	
+	  var regexp = new RegExp('(?:' + parts.join('|') + ')', flags(options))
+	
+	  return attachKeys(regexp, keys)
+	}
+	
+	/**
+	 * Create a path regexp from string input.
+	 *
+	 * @param  {string}  path
+	 * @param  {!Array}  keys
+	 * @param  {!Object} options
+	 * @return {!RegExp}
+	 */
+	function stringToRegexp (path, keys, options) {
+	  return tokensToRegExp(parse(path, options), keys, options)
+	}
+	
+	/**
+	 * Expose a function for taking tokens and returning a RegExp.
+	 *
+	 * @param  {!Array}          tokens
+	 * @param  {(Array|Object)=} keys
+	 * @param  {Object=}         options
+	 * @return {!RegExp}
+	 */
+	function tokensToRegExp (tokens, keys, options) {
+	  if (!isarray(keys)) {
+	    options = /** @type {!Object} */ (keys || options)
+	    keys = []
+	  }
+	
+	  options = options || {}
+	
+	  var strict = options.strict
+	  var end = options.end !== false
+	  var route = ''
+	
+	  // Iterate over the tokens and create our regexp string.
+	  for (var i = 0; i < tokens.length; i++) {
+	    var token = tokens[i]
+	
+	    if (typeof token === 'string') {
+	      route += escapeString(token)
+	    } else {
+	      var prefix = escapeString(token.prefix)
+	      var capture = '(?:' + token.pattern + ')'
+	
+	      keys.push(token)
+	
+	      if (token.repeat) {
+	        capture += '(?:' + prefix + capture + ')*'
+	      }
+	
+	      if (token.optional) {
+	        if (!token.partial) {
+	          capture = '(?:' + prefix + '(' + capture + '))?'
+	        } else {
+	          capture = prefix + '(' + capture + ')?'
+	        }
+	      } else {
+	        capture = prefix + '(' + capture + ')'
+	      }
+	
+	      route += capture
+	    }
+	  }
+	
+	  var delimiter = escapeString(options.delimiter || '/')
+	  var endsWithDelimiter = route.slice(-delimiter.length) === delimiter
+	
+	  // In non-strict mode we allow a slash at the end of match. If the path to
+	  // match already ends with a slash, we remove it for consistency. The slash
+	  // is valid at the end of a path match, not in the middle. This is important
+	  // in non-ending mode, where "/test/" shouldn't match "/test//route".
+	  if (!strict) {
+	    route = (endsWithDelimiter ? route.slice(0, -delimiter.length) : route) + '(?:' + delimiter + '(?=$))?'
+	  }
+	
+	  if (end) {
+	    route += '$'
+	  } else {
+	    // In non-ending mode, we need the capturing groups to match as much as
+	    // possible by using a positive lookahead to the end or next path segment.
+	    route += strict && endsWithDelimiter ? '' : '(?=' + delimiter + '|$)'
+	  }
+	
+	  return attachKeys(new RegExp('^' + route, flags(options)), keys)
+	}
+	
+	/**
+	 * Normalize the given path string, returning a regular expression.
+	 *
+	 * An empty array can be passed in for the keys, which will hold the
+	 * placeholder key descriptions. For example, using `/user/:id`, `keys` will
+	 * contain `[{ name: 'id', delimiter: '/', optional: false, repeat: false }]`.
+	 *
+	 * @param  {(string|RegExp|Array)} path
+	 * @param  {(Array|Object)=}       keys
+	 * @param  {Object=}               options
+	 * @return {!RegExp}
+	 */
+	function pathToRegexp (path, keys, options) {
+	  if (!isarray(keys)) {
+	    options = /** @type {!Object} */ (keys || options)
+	    keys = []
+	  }
+	
+	  options = options || {}
+	
+	  if (path instanceof RegExp) {
+	    return regexpToRegexp(path, /** @type {!Array} */ (keys))
+	  }
+	
+	  if (isarray(path)) {
+	    return arrayToRegexp(/** @type {!Array} */ (path), /** @type {!Array} */ (keys), options)
+	  }
+	
+	  return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
+	}
+
+
+/***/ }),
+/* 153 */
+/***/ (function(module, exports, __webpack_require__) {
+
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
 	 *
@@ -7807,7 +8239,7 @@
 
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports) {
 
 	/**
@@ -7825,7 +8257,7 @@
 
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7834,7 +8266,7 @@
 
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports) {
 
 	/**
@@ -7991,7 +8423,7 @@
 	module.exports = CSSProperty;
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8112,7 +8544,7 @@
 	module.exports = PooledClass.addPoolingTo(CallbackQueue);
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8349,7 +8781,7 @@
 	module.exports = DOMPropertyOperations;
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports) {
 
 	/**
@@ -8369,7 +8801,7 @@
 	module.exports = ReactDOMComponentFlags;
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8571,7 +9003,7 @@
 	module.exports = ReactDOMSelect;
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports) {
 
 	/**
@@ -8603,7 +9035,7 @@
 	module.exports = ReactEmptyComponent;
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports) {
 
 	/**
@@ -8627,7 +9059,7 @@
 	module.exports = ReactFeatureFlags;
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8697,7 +9129,7 @@
 	module.exports = ReactHostComponent;
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8822,7 +9254,7 @@
 	module.exports = ReactInputSelection;
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8845,7 +9277,7 @@
 	var ReactDOMComponentTree = __webpack_require__(6);
 	var ReactDOMContainerInfo = __webpack_require__(350);
 	var ReactDOMFeatureFlags = __webpack_require__(352);
-	var ReactFeatureFlags = __webpack_require__(161);
+	var ReactFeatureFlags = __webpack_require__(162);
 	var ReactInstanceMap = __webpack_require__(50);
 	var ReactInstrumentation = __webpack_require__(11);
 	var ReactMarkupChecksum = __webpack_require__(366);
@@ -8854,7 +9286,7 @@
 	var ReactUpdates = __webpack_require__(14);
 	
 	var emptyObject = __webpack_require__(35);
-	var instantiateReactComponent = __webpack_require__(172);
+	var instantiateReactComponent = __webpack_require__(173);
 	var invariant = __webpack_require__(1);
 	var setInnerHTML = __webpack_require__(71);
 	var shouldUpdateReactComponent = __webpack_require__(118);
@@ -9362,7 +9794,7 @@
 	module.exports = ReactMount;
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9404,7 +9836,7 @@
 	module.exports = ReactNodeTypes;
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports) {
 
 	/**
@@ -9431,7 +9863,7 @@
 	module.exports = ViewportMetrics;
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9491,7 +9923,7 @@
 	module.exports = accumulateInto;
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports) {
 
 	/**
@@ -9524,7 +9956,7 @@
 	module.exports = forEachAccumulated;
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9537,7 +9969,7 @@
 	
 	'use strict';
 	
-	var ReactNodeTypes = __webpack_require__(165);
+	var ReactNodeTypes = __webpack_require__(166);
 	
 	function getHostComponentFromComposite(inst) {
 	  var type;
@@ -9556,7 +9988,7 @@
 	module.exports = getHostComponentFromComposite;
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9591,7 +10023,7 @@
 	module.exports = getTextContentAccessor;
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9716,7 +10148,7 @@
 	module.exports = inputValueTracking;
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9733,8 +10165,8 @@
 	    _assign = __webpack_require__(5);
 	
 	var ReactCompositeComponent = __webpack_require__(347);
-	var ReactEmptyComponent = __webpack_require__(160);
-	var ReactHostComponent = __webpack_require__(162);
+	var ReactEmptyComponent = __webpack_require__(161);
+	var ReactHostComponent = __webpack_require__(163);
 	
 	var getNextDebugID = __webpack_require__(427);
 	var invariant = __webpack_require__(1);
@@ -9847,7 +10279,7 @@
 	module.exports = instantiateReactComponent;
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports) {
 
 	/**
@@ -9900,7 +10332,7 @@
 	module.exports = isTextInputElement;
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9954,7 +10386,7 @@
 	module.exports = setTextContent;
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -10132,8 +10564,8 @@
 	module.exports = traverseAllChildren;
 
 /***/ }),
-/* 176 */,
-/* 177 */
+/* 177 */,
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10255,14 +10687,14 @@
 	exports.default = Link;
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _Route = __webpack_require__(179);
+	var _Route = __webpack_require__(180);
 	
 	var _Route2 = _interopRequireDefault(_Route);
 	
@@ -10271,7 +10703,7 @@
 	exports.default = _Route2.default; // Written in this round about way for babel-transform-imports
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10433,14 +10865,14 @@
 	exports.default = Route;
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _pathToRegexp = __webpack_require__(181);
+	var _pathToRegexp = __webpack_require__(152);
 	
 	var _pathToRegexp2 = _interopRequireDefault(_pathToRegexp);
 	
@@ -10481,438 +10913,6 @@
 	};
 	
 	exports.default = generatePath;
-
-/***/ }),
-/* 181 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var isarray = __webpack_require__(325)
-	
-	/**
-	 * Expose `pathToRegexp`.
-	 */
-	module.exports = pathToRegexp
-	module.exports.parse = parse
-	module.exports.compile = compile
-	module.exports.tokensToFunction = tokensToFunction
-	module.exports.tokensToRegExp = tokensToRegExp
-	
-	/**
-	 * The main path matching regexp utility.
-	 *
-	 * @type {RegExp}
-	 */
-	var PATH_REGEXP = new RegExp([
-	  // Match escaped characters that would otherwise appear in future matches.
-	  // This allows the user to escape special characters that won't transform.
-	  '(\\\\.)',
-	  // Match Express-style parameters and un-named parameters with a prefix
-	  // and optional suffixes. Matches appear as:
-	  //
-	  // "/:test(\\d+)?" => ["/", "test", "\d+", undefined, "?", undefined]
-	  // "/route(\\d+)"  => [undefined, undefined, undefined, "\d+", undefined, undefined]
-	  // "/*"            => ["/", undefined, undefined, undefined, undefined, "*"]
-	  '([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?|(\\*))'
-	].join('|'), 'g')
-	
-	/**
-	 * Parse a string for the raw tokens.
-	 *
-	 * @param  {string}  str
-	 * @param  {Object=} options
-	 * @return {!Array}
-	 */
-	function parse (str, options) {
-	  var tokens = []
-	  var key = 0
-	  var index = 0
-	  var path = ''
-	  var defaultDelimiter = options && options.delimiter || '/'
-	  var res
-	
-	  while ((res = PATH_REGEXP.exec(str)) != null) {
-	    var m = res[0]
-	    var escaped = res[1]
-	    var offset = res.index
-	    path += str.slice(index, offset)
-	    index = offset + m.length
-	
-	    // Ignore already escaped sequences.
-	    if (escaped) {
-	      path += escaped[1]
-	      continue
-	    }
-	
-	    var next = str[index]
-	    var prefix = res[2]
-	    var name = res[3]
-	    var capture = res[4]
-	    var group = res[5]
-	    var modifier = res[6]
-	    var asterisk = res[7]
-	
-	    // Push the current path onto the tokens.
-	    if (path) {
-	      tokens.push(path)
-	      path = ''
-	    }
-	
-	    var partial = prefix != null && next != null && next !== prefix
-	    var repeat = modifier === '+' || modifier === '*'
-	    var optional = modifier === '?' || modifier === '*'
-	    var delimiter = res[2] || defaultDelimiter
-	    var pattern = capture || group
-	
-	    tokens.push({
-	      name: name || key++,
-	      prefix: prefix || '',
-	      delimiter: delimiter,
-	      optional: optional,
-	      repeat: repeat,
-	      partial: partial,
-	      asterisk: !!asterisk,
-	      pattern: pattern ? escapeGroup(pattern) : (asterisk ? '.*' : '[^' + escapeString(delimiter) + ']+?')
-	    })
-	  }
-	
-	  // Match any characters still remaining.
-	  if (index < str.length) {
-	    path += str.substr(index)
-	  }
-	
-	  // If the path exists, push it onto the end.
-	  if (path) {
-	    tokens.push(path)
-	  }
-	
-	  return tokens
-	}
-	
-	/**
-	 * Compile a string to a template function for the path.
-	 *
-	 * @param  {string}             str
-	 * @param  {Object=}            options
-	 * @return {!function(Object=, Object=)}
-	 */
-	function compile (str, options) {
-	  return tokensToFunction(parse(str, options), options)
-	}
-	
-	/**
-	 * Prettier encoding of URI path segments.
-	 *
-	 * @param  {string}
-	 * @return {string}
-	 */
-	function encodeURIComponentPretty (str) {
-	  return encodeURI(str).replace(/[\/?#]/g, function (c) {
-	    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-	  })
-	}
-	
-	/**
-	 * Encode the asterisk parameter. Similar to `pretty`, but allows slashes.
-	 *
-	 * @param  {string}
-	 * @return {string}
-	 */
-	function encodeAsterisk (str) {
-	  return encodeURI(str).replace(/[?#]/g, function (c) {
-	    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-	  })
-	}
-	
-	/**
-	 * Expose a method for transforming tokens into the path function.
-	 */
-	function tokensToFunction (tokens, options) {
-	  // Compile all the tokens into regexps.
-	  var matches = new Array(tokens.length)
-	
-	  // Compile all the patterns before compilation.
-	  for (var i = 0; i < tokens.length; i++) {
-	    if (typeof tokens[i] === 'object') {
-	      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$', flags(options))
-	    }
-	  }
-	
-	  return function (obj, opts) {
-	    var path = ''
-	    var data = obj || {}
-	    var options = opts || {}
-	    var encode = options.pretty ? encodeURIComponentPretty : encodeURIComponent
-	
-	    for (var i = 0; i < tokens.length; i++) {
-	      var token = tokens[i]
-	
-	      if (typeof token === 'string') {
-	        path += token
-	
-	        continue
-	      }
-	
-	      var value = data[token.name]
-	      var segment
-	
-	      if (value == null) {
-	        if (token.optional) {
-	          // Prepend partial segment prefixes.
-	          if (token.partial) {
-	            path += token.prefix
-	          }
-	
-	          continue
-	        } else {
-	          throw new TypeError('Expected "' + token.name + '" to be defined')
-	        }
-	      }
-	
-	      if (isarray(value)) {
-	        if (!token.repeat) {
-	          throw new TypeError('Expected "' + token.name + '" to not repeat, but received `' + JSON.stringify(value) + '`')
-	        }
-	
-	        if (value.length === 0) {
-	          if (token.optional) {
-	            continue
-	          } else {
-	            throw new TypeError('Expected "' + token.name + '" to not be empty')
-	          }
-	        }
-	
-	        for (var j = 0; j < value.length; j++) {
-	          segment = encode(value[j])
-	
-	          if (!matches[i].test(segment)) {
-	            throw new TypeError('Expected all "' + token.name + '" to match "' + token.pattern + '", but received `' + JSON.stringify(segment) + '`')
-	          }
-	
-	          path += (j === 0 ? token.prefix : token.delimiter) + segment
-	        }
-	
-	        continue
-	      }
-	
-	      segment = token.asterisk ? encodeAsterisk(value) : encode(value)
-	
-	      if (!matches[i].test(segment)) {
-	        throw new TypeError('Expected "' + token.name + '" to match "' + token.pattern + '", but received "' + segment + '"')
-	      }
-	
-	      path += token.prefix + segment
-	    }
-	
-	    return path
-	  }
-	}
-	
-	/**
-	 * Escape a regular expression string.
-	 *
-	 * @param  {string} str
-	 * @return {string}
-	 */
-	function escapeString (str) {
-	  return str.replace(/([.+*?=^!:${}()[\]|\/\\])/g, '\\$1')
-	}
-	
-	/**
-	 * Escape the capturing group by escaping special characters and meaning.
-	 *
-	 * @param  {string} group
-	 * @return {string}
-	 */
-	function escapeGroup (group) {
-	  return group.replace(/([=!:$\/()])/g, '\\$1')
-	}
-	
-	/**
-	 * Attach the keys as a property of the regexp.
-	 *
-	 * @param  {!RegExp} re
-	 * @param  {Array}   keys
-	 * @return {!RegExp}
-	 */
-	function attachKeys (re, keys) {
-	  re.keys = keys
-	  return re
-	}
-	
-	/**
-	 * Get the flags for a regexp from the options.
-	 *
-	 * @param  {Object} options
-	 * @return {string}
-	 */
-	function flags (options) {
-	  return options && options.sensitive ? '' : 'i'
-	}
-	
-	/**
-	 * Pull out keys from a regexp.
-	 *
-	 * @param  {!RegExp} path
-	 * @param  {!Array}  keys
-	 * @return {!RegExp}
-	 */
-	function regexpToRegexp (path, keys) {
-	  // Use a negative lookahead to match only capturing groups.
-	  var groups = path.source.match(/\((?!\?)/g)
-	
-	  if (groups) {
-	    for (var i = 0; i < groups.length; i++) {
-	      keys.push({
-	        name: i,
-	        prefix: null,
-	        delimiter: null,
-	        optional: false,
-	        repeat: false,
-	        partial: false,
-	        asterisk: false,
-	        pattern: null
-	      })
-	    }
-	  }
-	
-	  return attachKeys(path, keys)
-	}
-	
-	/**
-	 * Transform an array into a regexp.
-	 *
-	 * @param  {!Array}  path
-	 * @param  {Array}   keys
-	 * @param  {!Object} options
-	 * @return {!RegExp}
-	 */
-	function arrayToRegexp (path, keys, options) {
-	  var parts = []
-	
-	  for (var i = 0; i < path.length; i++) {
-	    parts.push(pathToRegexp(path[i], keys, options).source)
-	  }
-	
-	  var regexp = new RegExp('(?:' + parts.join('|') + ')', flags(options))
-	
-	  return attachKeys(regexp, keys)
-	}
-	
-	/**
-	 * Create a path regexp from string input.
-	 *
-	 * @param  {string}  path
-	 * @param  {!Array}  keys
-	 * @param  {!Object} options
-	 * @return {!RegExp}
-	 */
-	function stringToRegexp (path, keys, options) {
-	  return tokensToRegExp(parse(path, options), keys, options)
-	}
-	
-	/**
-	 * Expose a function for taking tokens and returning a RegExp.
-	 *
-	 * @param  {!Array}          tokens
-	 * @param  {(Array|Object)=} keys
-	 * @param  {Object=}         options
-	 * @return {!RegExp}
-	 */
-	function tokensToRegExp (tokens, keys, options) {
-	  if (!isarray(keys)) {
-	    options = /** @type {!Object} */ (keys || options)
-	    keys = []
-	  }
-	
-	  options = options || {}
-	
-	  var strict = options.strict
-	  var end = options.end !== false
-	  var route = ''
-	
-	  // Iterate over the tokens and create our regexp string.
-	  for (var i = 0; i < tokens.length; i++) {
-	    var token = tokens[i]
-	
-	    if (typeof token === 'string') {
-	      route += escapeString(token)
-	    } else {
-	      var prefix = escapeString(token.prefix)
-	      var capture = '(?:' + token.pattern + ')'
-	
-	      keys.push(token)
-	
-	      if (token.repeat) {
-	        capture += '(?:' + prefix + capture + ')*'
-	      }
-	
-	      if (token.optional) {
-	        if (!token.partial) {
-	          capture = '(?:' + prefix + '(' + capture + '))?'
-	        } else {
-	          capture = prefix + '(' + capture + ')?'
-	        }
-	      } else {
-	        capture = prefix + '(' + capture + ')'
-	      }
-	
-	      route += capture
-	    }
-	  }
-	
-	  var delimiter = escapeString(options.delimiter || '/')
-	  var endsWithDelimiter = route.slice(-delimiter.length) === delimiter
-	
-	  // In non-strict mode we allow a slash at the end of match. If the path to
-	  // match already ends with a slash, we remove it for consistency. The slash
-	  // is valid at the end of a path match, not in the middle. This is important
-	  // in non-ending mode, where "/test/" shouldn't match "/test//route".
-	  if (!strict) {
-	    route = (endsWithDelimiter ? route.slice(0, -delimiter.length) : route) + '(?:' + delimiter + '(?=$))?'
-	  }
-	
-	  if (end) {
-	    route += '$'
-	  } else {
-	    // In non-ending mode, we need the capturing groups to match as much as
-	    // possible by using a positive lookahead to the end or next path segment.
-	    route += strict && endsWithDelimiter ? '' : '(?=' + delimiter + '|$)'
-	  }
-	
-	  return attachKeys(new RegExp('^' + route, flags(options)), keys)
-	}
-	
-	/**
-	 * Normalize the given path string, returning a regular expression.
-	 *
-	 * An empty array can be passed in for the keys, which will hold the
-	 * placeholder key descriptions. For example, using `/user/:id`, `keys` will
-	 * contain `[{ name: 'id', delimiter: '/', optional: false, repeat: false }]`.
-	 *
-	 * @param  {(string|RegExp|Array)} path
-	 * @param  {(Array|Object)=}       keys
-	 * @param  {Object=}               options
-	 * @return {!RegExp}
-	 */
-	function pathToRegexp (path, keys, options) {
-	  if (!isarray(keys)) {
-	    options = /** @type {!Object} */ (keys || options)
-	    keys = []
-	  }
-	
-	  options = options || {}
-	
-	  if (path instanceof RegExp) {
-	    return regexpToRegexp(path, /** @type {!Array} */ (keys))
-	  }
-	
-	  if (isarray(path)) {
-	    return arrayToRegexp(/** @type {!Array} */ (path), /** @type {!Array} */ (keys), options)
-	  }
-	
-	  return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
-	}
-
 
 /***/ }),
 /* 182 */
@@ -14385,7 +14385,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(154);
+	var _reactDom = __webpack_require__(155);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
@@ -14694,23 +14694,21 @@
 
 /***/ }),
 /* 324 */,
-/* 325 */
-/***/ (function(module, exports) {
-
-	var toString = {}.toString;
-	
-	module.exports = Array.isArray || function (arr) {
-	  return toString.call(arr) == '[object Array]';
-	};
-
-
-/***/ }),
+/* 325 */,
 /* 326 */,
 /* 327 */,
 /* 328 */,
 /* 329 */,
 /* 330 */,
-/* 331 */,
+/* 331 */
+/***/ (function(module, exports) {
+
+	module.exports = Array.isArray || function (arr) {
+	  return Object.prototype.toString.call(arr) == '[object Array]';
+	};
+
+
+/***/ }),
 /* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14831,7 +14829,7 @@
 	
 	'use strict';
 	
-	var ReactPropTypesSecret = __webpack_require__(153);
+	var ReactPropTypesSecret = __webpack_require__(154);
 	
 	function emptyFunction() {}
 	function emptyFunctionWithReset() {}
@@ -14904,7 +14902,7 @@
 	var ReactIs = __webpack_require__(120);
 	var assign = __webpack_require__(5);
 	
-	var ReactPropTypesSecret = __webpack_require__(153);
+	var ReactPropTypesSecret = __webpack_require__(154);
 	var checkPropTypes = __webpack_require__(332);
 	
 	var has = Function.call.bind(Object.prototype.hasOwnProperty);
@@ -15987,7 +15985,7 @@
 	
 	'use strict';
 	
-	var CSSProperty = __webpack_require__(155);
+	var CSSProperty = __webpack_require__(156);
 	var ExecutionEnvironment = __webpack_require__(8);
 	var ReactInstrumentation = __webpack_require__(11);
 	
@@ -16211,10 +16209,10 @@
 	var ReactUpdates = __webpack_require__(14);
 	var SyntheticEvent = __webpack_require__(16);
 	
-	var inputValueTracking = __webpack_require__(171);
+	var inputValueTracking = __webpack_require__(172);
 	var getEventTarget = __webpack_require__(116);
 	var isEventSupported = __webpack_require__(117);
-	var isTextInputElement = __webpack_require__(173);
+	var isTextInputElement = __webpack_require__(174);
 	
 	var eventTypes = {
 	  change: {
@@ -16698,7 +16696,7 @@
 	
 	var PooledClass = __webpack_require__(26);
 	
-	var getTextContentAccessor = __webpack_require__(170);
+	var getTextContentAccessor = __webpack_require__(171);
 	
 	/**
 	 * This helper class stores information about text content of a target node,
@@ -17032,15 +17030,15 @@
 	
 	var ReactReconciler = __webpack_require__(38);
 	
-	var instantiateReactComponent = __webpack_require__(172);
+	var instantiateReactComponent = __webpack_require__(173);
 	var KeyEscapeUtils = __webpack_require__(108);
 	var shouldUpdateReactComponent = __webpack_require__(118);
-	var traverseAllChildren = __webpack_require__(175);
+	var traverseAllChildren = __webpack_require__(176);
 	var warning = __webpack_require__(4);
 	
 	var ReactComponentTreeHook;
 	
-	if (typeof process !== 'undefined' && ({"NODE_ENV":"production","PUBLIC_DIR":"C:\\Users\\Unerty\\Desktop\\5\\MSEEP\\project\\desertification/public"}) && ("production") === 'test') {
+	if (typeof process !== 'undefined' && ({"NODE_ENV":"production","PUBLIC_DIR":"C:\\Users\\Unerty\\Desktop\\5\\MSEEP\\project\\desertification/public","GATSBY_LOGGER":"ink"}) && ("production") === 'test') {
 	  // Temporary hack.
 	  // Inline requires don't work well with Jest:
 	  // https://github.com/facebook/react/issues/7240
@@ -17225,7 +17223,7 @@
 	var ReactErrorUtils = __webpack_require__(111);
 	var ReactInstanceMap = __webpack_require__(50);
 	var ReactInstrumentation = __webpack_require__(11);
-	var ReactNodeTypes = __webpack_require__(165);
+	var ReactNodeTypes = __webpack_require__(166);
 	var ReactReconciler = __webpack_require__(38);
 	
 	if (false) {
@@ -18122,13 +18120,13 @@
 	
 	var ReactDOMComponentTree = __webpack_require__(6);
 	var ReactDefaultInjection = __webpack_require__(361);
-	var ReactMount = __webpack_require__(164);
+	var ReactMount = __webpack_require__(165);
 	var ReactReconciler = __webpack_require__(38);
 	var ReactUpdates = __webpack_require__(14);
 	var ReactVersion = __webpack_require__(374);
 	
 	var findDOMNode = __webpack_require__(390);
-	var getHostComponentFromComposite = __webpack_require__(169);
+	var getHostComponentFromComposite = __webpack_require__(170);
 	var renderSubtreeIntoContainer = __webpack_require__(397);
 	var warning = __webpack_require__(4);
 	
@@ -18241,15 +18239,15 @@
 	var DOMLazyTree = __webpack_require__(36);
 	var DOMNamespaces = __webpack_require__(105);
 	var DOMProperty = __webpack_require__(37);
-	var DOMPropertyOperations = __webpack_require__(157);
+	var DOMPropertyOperations = __webpack_require__(158);
 	var EventPluginHub = __webpack_require__(48);
 	var EventPluginRegistry = __webpack_require__(106);
 	var ReactBrowserEventEmitter = __webpack_require__(67);
-	var ReactDOMComponentFlags = __webpack_require__(158);
+	var ReactDOMComponentFlags = __webpack_require__(159);
 	var ReactDOMComponentTree = __webpack_require__(6);
 	var ReactDOMInput = __webpack_require__(354);
 	var ReactDOMOption = __webpack_require__(355);
-	var ReactDOMSelect = __webpack_require__(159);
+	var ReactDOMSelect = __webpack_require__(160);
 	var ReactDOMTextarea = __webpack_require__(358);
 	var ReactInstrumentation = __webpack_require__(11);
 	var ReactMultiChild = __webpack_require__(367);
@@ -18260,7 +18258,7 @@
 	var invariant = __webpack_require__(1);
 	var isEventSupported = __webpack_require__(117);
 	var shallowEqual = __webpack_require__(101);
-	var inputValueTracking = __webpack_require__(171);
+	var inputValueTracking = __webpack_require__(172);
 	var validateDOMNesting = __webpack_require__(119);
 	var warning = __webpack_require__(4);
 	
@@ -19403,7 +19401,7 @@
 	var _prodInvariant = __webpack_require__(3),
 	    _assign = __webpack_require__(5);
 	
-	var DOMPropertyOperations = __webpack_require__(157);
+	var DOMPropertyOperations = __webpack_require__(158);
 	var LinkedValueUtils = __webpack_require__(109);
 	var ReactDOMComponentTree = __webpack_require__(6);
 	var ReactUpdates = __webpack_require__(14);
@@ -19693,7 +19691,7 @@
 	
 	var React = __webpack_require__(39);
 	var ReactDOMComponentTree = __webpack_require__(6);
-	var ReactDOMSelect = __webpack_require__(159);
+	var ReactDOMSelect = __webpack_require__(160);
 	
 	var warning = __webpack_require__(4);
 	var didWarnInvalidOptionChildren = false;
@@ -19816,7 +19814,7 @@
 	var ExecutionEnvironment = __webpack_require__(8);
 	
 	var getNodeForCharacterOffset = __webpack_require__(394);
-	var getTextContentAccessor = __webpack_require__(170);
+	var getTextContentAccessor = __webpack_require__(171);
 	
 	/**
 	 * While `isCollapsed` is available on the Selection object and `collapsed`
@@ -20866,9 +20864,9 @@
 	var EventPluginHub = __webpack_require__(48);
 	var EventPluginUtils = __webpack_require__(107);
 	var ReactComponentEnvironment = __webpack_require__(110);
-	var ReactEmptyComponent = __webpack_require__(160);
+	var ReactEmptyComponent = __webpack_require__(161);
 	var ReactBrowserEventEmitter = __webpack_require__(67);
-	var ReactHostComponent = __webpack_require__(162);
+	var ReactHostComponent = __webpack_require__(163);
 	var ReactUpdates = __webpack_require__(14);
 	
 	var ReactInjection = {
@@ -21514,10 +21512,10 @@
 	
 	var _assign = __webpack_require__(5);
 	
-	var CallbackQueue = __webpack_require__(156);
+	var CallbackQueue = __webpack_require__(157);
 	var PooledClass = __webpack_require__(26);
 	var ReactBrowserEventEmitter = __webpack_require__(67);
-	var ReactInputSelection = __webpack_require__(163);
+	var ReactInputSelection = __webpack_require__(164);
 	var ReactInstrumentation = __webpack_require__(11);
 	var Transaction = __webpack_require__(69);
 	var ReactUpdateQueue = __webpack_require__(112);
@@ -22339,11 +22337,11 @@
 	var EventPropagators = __webpack_require__(49);
 	var ExecutionEnvironment = __webpack_require__(8);
 	var ReactDOMComponentTree = __webpack_require__(6);
-	var ReactInputSelection = __webpack_require__(163);
+	var ReactInputSelection = __webpack_require__(164);
 	var SyntheticEvent = __webpack_require__(16);
 	
 	var getActiveElement = __webpack_require__(151);
-	var isTextInputElement = __webpack_require__(173);
+	var isTextInputElement = __webpack_require__(174);
 	var shallowEqual = __webpack_require__(101);
 	
 	var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
@@ -23261,7 +23259,7 @@
 	
 	'use strict';
 	
-	var CSSProperty = __webpack_require__(155);
+	var CSSProperty = __webpack_require__(156);
 	var warning = __webpack_require__(4);
 	
 	var isUnitlessNumber = CSSProperty.isUnitlessNumber;
@@ -23348,7 +23346,7 @@
 	var ReactDOMComponentTree = __webpack_require__(6);
 	var ReactInstanceMap = __webpack_require__(50);
 	
-	var getHostComponentFromComposite = __webpack_require__(169);
+	var getHostComponentFromComposite = __webpack_require__(170);
 	var invariant = __webpack_require__(1);
 	var warning = __webpack_require__(4);
 	
@@ -23406,12 +23404,12 @@
 	'use strict';
 	
 	var KeyEscapeUtils = __webpack_require__(108);
-	var traverseAllChildren = __webpack_require__(175);
+	var traverseAllChildren = __webpack_require__(176);
 	var warning = __webpack_require__(4);
 	
 	var ReactComponentTreeHook;
 	
-	if (typeof process !== 'undefined' && ({"NODE_ENV":"production","PUBLIC_DIR":"C:\\Users\\Unerty\\Desktop\\5\\MSEEP\\project\\desertification/public"}) && ("production") === 'test') {
+	if (typeof process !== 'undefined' && ({"NODE_ENV":"production","PUBLIC_DIR":"C:\\Users\\Unerty\\Desktop\\5\\MSEEP\\project\\desertification/public","GATSBY_LOGGER":"ink"}) && ("production") === 'test') {
 	  // Temporary hack.
 	  // Inline requires don't work well with Jest:
 	  // https://github.com/facebook/react/issues/7240
@@ -23847,7 +23845,7 @@
 	
 	'use strict';
 	
-	var ReactMount = __webpack_require__(164);
+	var ReactMount = __webpack_require__(165);
 	
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
@@ -24033,11 +24031,11 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _Route = __webpack_require__(178);
+	var _Route = __webpack_require__(179);
 	
 	var _Route2 = _interopRequireDefault(_Route);
 	
-	var _Link = __webpack_require__(177);
+	var _Link = __webpack_require__(178);
 	
 	var _Link2 = _interopRequireDefault(_Link);
 	
@@ -24181,7 +24179,7 @@
 	
 	exports.__esModule = true;
 	
-	var _generatePath = __webpack_require__(180);
+	var _generatePath = __webpack_require__(181);
 	
 	var _generatePath2 = _interopRequireDefault(_generatePath);
 	
@@ -24416,7 +24414,7 @@
 	
 	var _history = __webpack_require__(15);
 	
-	var _generatePath = __webpack_require__(180);
+	var _generatePath = __webpack_require__(181);
 	
 	var _generatePath2 = _interopRequireDefault(_generatePath);
 	
@@ -24819,7 +24817,7 @@
 	
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 	
-	var _Route = __webpack_require__(179);
+	var _Route = __webpack_require__(180);
 	
 	var _Route2 = _interopRequireDefault(_Route);
 	
@@ -25412,7 +25410,7 @@
 	var _require = __webpack_require__(40),
 	    isValidElement = _require.isValidElement;
 	
-	var factory = __webpack_require__(152);
+	var factory = __webpack_require__(153);
 	
 	module.exports = factory(isValidElement);
 
@@ -26216,4 +26214,4 @@
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=commons-2360fbb5e36a296c38ed.js.map
+//# sourceMappingURL=commons-243fe4583b5a6f2a25b6.js.map
