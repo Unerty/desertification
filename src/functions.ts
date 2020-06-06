@@ -4,18 +4,7 @@ export const saturationVaporDensity = (temperature: number) => { // for example,
   if (table.has(temperature)) {
     return table.get(temperature);
   } else {
-    const floor = Math.floor(temperature); // 58
-    const ceil = Math.ceil(temperature); // 59
-    const howMuchInRange = temperature - floor; // 58.2 - 58 = 0.2
-
-    try {
-      const floorTemperature = table.get(floor); // 148.6
-      const ceilTemperature = table.get(ceil); // 154.8
-      const temperatureRange = ceilTemperature - floorTemperature; // 6.2
-      const countedSaturationVaporDensity = floorTemperature + (temperatureRange * howMuchInRange); // 148.6 + (6.2 * 0.2) = 149.24
-      return countedSaturationVaporDensity;
-    } catch (e) {
-      throw e;
+    console.log(`Temperature: ${temperature}, SVD: ${table.get(Math.floor(temperature))}`);
+    return table.get(Math.floor(temperature));
     }
-  }
 };
