@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const BushesAmountInput = (props: IProps) =>
-  <div className={"input-card bush-color"}>
+  <div className={"rounded card bush-color"}>
     <span>Amount of bushess: <strong> {props.bushesAmount}</strong></span>
     <input style={{ borderStyle: "unset", borderRadius: "10px" }}
            type="number" id="bushesAmountSelector" name="bushesAmountSelector" min="0" max="2000000" step="1" value={props.bushesAmount}

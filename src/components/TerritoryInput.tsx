@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const TerritoryInput = (props: IProps) =>
-  <div className={"input-card"}>
+  <div className={"rounded card"}>
     <span>Territory area: <strong> {props.territory} km²</strong></span>
     <input style={{ borderStyle: "unset", borderRadius: "10px" }}
            type="number" id="territorySelector" name="territorySelector" min="0" max="2000000" step="1" value={props.territory}

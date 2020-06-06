@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const TemperatureInput = (props: IProps) =>
-  <div className={"input-card"}>
+  <div className={"rounded card"}>
     <span>Temperature: <strong> {props.temperature} °C</strong></span>
     <input style={{width: "max-content"}} type={"range"} id="temperatureSelector" name="temperatureSelector" min="-30" max="70" step="1"
            onInput={(event) => props.onInput(event)}
