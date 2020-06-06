@@ -94,6 +94,10 @@ h1{
   background-image: url(https://raw.githubusercontent.com/Unerty/desertification/master/src/images/rain.jpg);
 }
 
+.wetland{
+  background-image: url(https://raw.githubusercontent.com/Unerty/desertification/master/src/images/coldAndWet.jpg);
+}
+
 
 .tree-color {
   background: #ceffbc;

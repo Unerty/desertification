@@ -67,6 +67,10 @@ export default class extends React.Component<IProps, IState> {
     };
   }
 
+  componentDidMount(): void {
+    this.setCountedResults();
+  }
+
   countAbsoluteHumidity = async (): Promise<number> => {
     return await ((Number(this.state.treeAmount * TREE_VAPORIZES_PER_DAY / CLOUD_HEIGHT * 365.25 + this.state.cactooAmount * CACTOO_VAPORIZES_PER_YEAR / CLOUD_HEIGHT)) + Number(this.state.waterAmount) * waterVaporizingCoefficient(this.state.averageTemperature) * 50) / (this.state.territory * CLOUD_HEIGHT); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
   };
@@ -106,7 +110,12 @@ export default class extends React.Component<IProps, IState> {
         backgroundStyle = "moderate";
       }
       if (humidificationIndex > 0.4 && humidificationIndex <= 1) {
-        backgroundStyle = "rainforest";
+        if(this.state.averageTemperature > 18){
+          backgroundStyle = "rainforest";
+        }
+        else {
+          backgroundStyle = "wetland";
+        }
       }
       if (humidificationIndex > 1) {
         backgroundStyle = "rain";
@@ -147,11 +156,6 @@ export default class extends React.Component<IProps, IState> {
                              this.setState({ treeAmount: Number(event.target.value) });
                              this.setCountedResults();
                            }}/>
-          <TreeCuttingInput treeCutting={this.state.treeCutting}
-                            onInput={(event: any) => {
-                              this.setState({ treeCutting: Number(event.target.value) });
-                              this.setCountedResults();
-                            }}/>
           <TreePlantingInput treePlanting={this.state.treePlanting}
                              onInput={(event: any) => {
                                this.setState({ treePlanting: Number(event.target.value) });
@@ -176,6 +180,7 @@ export default class extends React.Component<IProps, IState> {
         <div className="moderate"/>
         <div className="rainforest"/>
         <div className="rain"/>
+        <div className="wetland"/>
       </div>
     );
   }
