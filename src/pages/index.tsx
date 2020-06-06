@@ -4,6 +4,7 @@ import TemperatureInput from "../components/TemperatureInput";
 import TerritoryInput from "../components/TerritoryInput";
 import TreeAmountInput from "../components/TreeAmountInput";
 import BushesAmountInput from "../components/BushesAmountInput";
+import TreeCuttingInput from "../components/TreeCuttingInput";
 
 interface IProps {
 }
@@ -56,6 +57,8 @@ export default class extends React.Component<IProps, IState> {
                           onInput={(event: any) => this.setState({ territory: event.target.value })}/>
           <TreeAmountInput treeAmount={this.state.treeAmount}
                            onInput={(event: any) => this.setState({ treeAmount: event.target.value })}/>
+          <TreeCuttingInput treeCutting={this.state.treeCutting}
+                           onInput={(event: any) => this.setState({ treeCutting: event.target.value })}/>
           <BushesAmountInput bushesAmount={this.state.bushesAmount}
                              onInput={(event: any) => this.setState({ bushesAmount: event.target.value })}/>
           <TemperatureInput temperature={this.state.averageTemperature}
