@@ -73,6 +73,9 @@ export default class extends React.Component<IProps, IState> {
           <BushesAmountInput bushesAmount={this.state.bushesAmount}
                              onInput={(event: any) => this.setState({ bushesAmount: event.target.value })}/>
         </div>
+        <h1>Counted Results</h1>
+        <div className={"counted-results"}>
+        </div>
       </div>
     );
   }
