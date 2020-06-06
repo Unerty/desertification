@@ -8,6 +8,9 @@ import TreeCuttingInput from "../components/inputs/TreeCuttingInput";
 import TreePlantingInput from "../components/inputs/TreePlantingInput";
 import PrecipationInput from "../components/inputs/PrecipationInput";
 import AdditionalWateringInput from "../components/inputs/AdditionalWateringInput";
+import RelativeHumidity from "../components/countedResults/RelativeHumidity";
+import AbsoluteHumidity from "../components/countedResults/AbsoluteHumidity";
+import Volatility from "../components/countedResults/Volatility";
 
 interface IProps {
 }
@@ -51,6 +54,12 @@ export default class extends React.Component<IProps, IState> {
 
   countAbsoluteHumidity = (): number => ((this.state.treeAmount * 365.25 * 1000000) + (this.state.bushesAmount * 365.25 * 1000000)) / (100 * 1000000 * this.state.territory); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for bushes)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
 
+  setRelativeHumidity = (): void => this.setState({ relativeHumidity: this.countRelativeHumidity() });
+
+  setVolatility = (): void => this.setState({ volatility: this.countVolatility() });
+
+  setAbsoluteHumidity = (): void => this.setState({ absoluteHumidity: this.countAbsoluteHumidity() });
+
   public render() {
     return (
       <div>
@@ -75,6 +84,9 @@ export default class extends React.Component<IProps, IState> {
         </div>
         <h1>Counted Results</h1>
         <div className={"group-of-cards"}>
+          <RelativeHumidity relativeHumidity={this.state.relativeHumidity}/>
+          <AbsoluteHumidity absoluteHumidity={this.state.absoluteHumidity}/>
+          <Volatility volatility={this.state.volatility}/>
         </div>
       </div>
     );
