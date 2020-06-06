@@ -17,12 +17,12 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
-    "build": "gatsby build --no-uglify",
+    "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --parser typescript --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.ts*\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "predeploy": "yarn run build",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+    "predeploy": "gatsby build --noUglify --prefix-paths",
+    "deploy": "gh-pages -d public"
   },
   "devDependencies": {
     "gh-pages": "^3.0.0",
