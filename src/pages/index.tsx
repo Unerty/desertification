@@ -18,6 +18,8 @@ import RelativeHumidity from "../components/countedResults/RelativeHumidity";
 import AbsoluteHumidity from "../components/countedResults/AbsoluteHumidity";
 import Volatility from "../components/countedResults/Volatility";
 import WaterAmountInput from "../components/inputs/WaterAmountInput";
+import WaterIncome from "../components/countedResults/WaterIncome";
+import HumidificationIndex from "../components/countedResults/HumidificationIndex";
 
 const CACTOO_VAPORIZES_PER_YEAR = 6000; // grams per year https://books.google.com.ua/books?id=cgo0ukOa_gIC&pg=PA9&lpg=PA9&dq=%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE+%D0%BA%D0%B0%D0%BA%D1%82%D1%83%D1%81%D0%BE%D0%B2+%D0%B2+%D0%BE%D0%B4%D0%BD%D0%BE%D0%B9+%D0%BF%D1%83%D1%81%D1%82%D1%8B%D0%BD%D0%B5&source=bl&ots=6FQXLOTKi6&sig=ACfU3U3f1b84bYd4NhgYaQFfiwywuMDKxQ&hl=ru&sa=X&ved=2ahUKEwid-7aZ2O3pAhWnk4sKHcG3BW8Q6AEwBXoECAkQAQ#v=onepage&q=%D0%B8%D1%81%D0%BF%D0%B0%D1%80%D1%8F%D0%B5%D1%82%20%D0%BA%D0%B0%D0%BA%D1%82%D1%83%D1%81&f=false
 const TREE_VAPORIZES_PER_DAY = 400000; //grams per day https://cyberleninka.ru/article/n/dnevnoy-rashod-vody-na-transpiratsiyu-tselym-drevesnym-rasteniem
@@ -41,6 +43,7 @@ interface IState {
   relativeHumidity: number; // absoluteHumidity/saturationVaporDensity
   volatility: number; // How much humidity (in mm) is able to vaporize from all the surface
   absoluteHumidity: number; // Measured in grams per one meter cubic of air
+  waterIncome: number // how much water comes each year
 }
 
 
@@ -59,14 +62,13 @@ export default class extends React.Component<IProps, IState> {
       waterAmount: 13,
       relativeHumidity: 0, // non-input
       volatility: 0, // non-input
-      absoluteHumidity: 0 // non-input
+      absoluteHumidity: 0, // non-input
+      waterIncome: 0 // non-input
     };
   }
 
   countAbsoluteHumidity = async (): Promise<number> => {
-    console.log(this.state.waterAmount*waterVaporizingCoefficient(this.state.averageTemperature));
-    console.log(this.state.treeAmount * TREE_VAPORIZES_PER_DAY/CLOUD_HEIGHT * 365.25 + this.state.cactooAmount * CACTOO_VAPORIZES_PER_YEAR/CLOUD_HEIGHT);
-    return await ((Number(this.state.treeAmount * TREE_VAPORIZES_PER_DAY/CLOUD_HEIGHT * 365.25  + this.state.cactooAmount * CACTOO_VAPORIZES_PER_YEAR/CLOUD_HEIGHT)) + Number(this.state.waterAmount)*waterVaporizingCoefficient(this.state.averageTemperature)*50) / (this.state.territory*CLOUD_HEIGHT); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
+    return await ((Number(this.state.treeAmount * TREE_VAPORIZES_PER_DAY / CLOUD_HEIGHT * 365.25 + this.state.cactooAmount * CACTOO_VAPORIZES_PER_YEAR / CLOUD_HEIGHT)) + Number(this.state.waterAmount) * waterVaporizingCoefficient(this.state.averageTemperature) * 50) / (this.state.territory * CLOUD_HEIGHT); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
   };
   countRelativeHumidity = async (): Promise<number> => await (await this.countAbsoluteHumidity() / saturationVaporDensity(this.state.averageTemperature)); // https://www.yaklass.ru/p/fizika/8-klass/izmenenie-sostoianiia-veshchestva-141552/otnositelnaia-vlazhnost-vozdukha-i-ee-izmerenie-189576/re-18d24d91-b778-4262-983f-4e1101acae16
 
@@ -75,21 +77,34 @@ export default class extends React.Component<IProps, IState> {
     return await ((0.01 * Math.pow(addedAverageTemperature, 2)) * (100 - await this.countRelativeHumidity()));// volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
   };
 
+  countWaterIncome = (): number => (Number(this.state.precipation) + (1000 * (Number(this.state.additionalWatering) / Number(this.state.territory))) - ((Number(this.state.waterAmount) * waterVaporizingCoefficient(Number(this.state.averageTemperature))) / (Number(this.state.territory) * 100000)));
+
   setAbsoluteHumidity = async (): Promise<void> => this.setState({ absoluteHumidity: await this.countAbsoluteHumidity() });
 
   setRelativeHumidity = async (): Promise<void> => this.setState({ relativeHumidity: await this.countRelativeHumidity() });
 
   setVolatility = async (): Promise<void> => await this.setState({ volatility: await this.countVolatility() });
 
+  setWaterIncome = async (): Promise<void> => await this.setState({ waterIncome: await this.countWaterIncome() });
+
   setCountedResults = (): void => {
-    this.setAbsoluteHumidity().then(this.setRelativeHumidity).then(this.setVolatility).then(this.setRelativeHumidity).then(this.setAbsoluteHumidity);
+    this.setAbsoluteHumidity().then(this.setRelativeHumidity).then(this.setVolatility).then(this.setRelativeHumidity).then(this.setAbsoluteHumidity).then(this.setWaterIncome);
   };
 
-  countWaterIncome = async (): Promise<number> => await (this.state.precipation + (1000 * (this.state.additionalWatering / this.state.territory)));
 
   public render() {
+    const humidificationIndex = this.countWaterIncome() / this.state.volatility; // (precipation + extra water) / volatility < 0.15
+    let backgroundStyle = "";
+
+    if (this.state.averageTemperature < 1) {
+      backgroundStyle = "cold-desert";
+    } else {
+      if (humidificationIndex < 0.15) {
+        backgroundStyle = "desert";
+      }
+    }
     return (
-      <div>
+      <div className="">
         <h1>Input Data</h1>
         <div className={"group-of-cards"}>
           <TerritoryInput territory={this.state.territory}
@@ -98,10 +113,10 @@ export default class extends React.Component<IProps, IState> {
                             this.setCountedResults();
                           }}/>
           <WaterAmountInput waterAmount={this.state.waterAmount}
-                          onInput={(event: any) => {
-                            this.setState({ waterAmount: Number(event.target.value) });
-                            this.setCountedResults();
-                          }}/>
+                            onInput={(event: any) => {
+                              this.setState({ waterAmount: Number(event.target.value) });
+                              this.setCountedResults();
+                            }}/>
           <TemperatureInput temperature={this.state.averageTemperature}
                             onInput={(event: any) => {
                               this.setState({ averageTemperature: Number(event.target.value) });
@@ -143,8 +158,11 @@ export default class extends React.Component<IProps, IState> {
           <RelativeHumidity relativeHumidity={this.state.relativeHumidity}/>
           <AbsoluteHumidity absoluteHumidity={this.state.absoluteHumidity}/>
           <Volatility volatility={this.state.volatility}/>
+          <WaterIncome waterIncome={this.state.waterIncome}/>
+          <HumidificationIndex humidificationIndex={humidificationIndex}/>
         </div>
       </div>
     );
   }
 }
+
