@@ -1,9 +1,11 @@
+// https://cyberleninka.ru/article/n/dnevnoy-rashod-vody-na-transpiratsiyu-tselym-drevesnym-rasteniem
+
 import * as React from "react";
 import { saturationVaporDensity } from "../functions";
 import TemperatureInput from "../components/inputs/TemperatureInput";
 import TerritoryInput from "../components/inputs/TerritoryInput";
 import TreeAmountInput from "../components/inputs/TreeAmountInput";
-import BushesAmountInput from "../components/inputs/BushesAmountInput";
+import CactooAmountInput from "../components/inputs/CactooAmountInput";
 import TreeCuttingInput from "../components/inputs/TreeCuttingInput";
 import TreePlantingInput from "../components/inputs/TreePlantingInput";
 import PrecipationInput from "../components/inputs/PrecipationInput";
@@ -11,6 +13,8 @@ import AdditionalWateringInput from "../components/inputs/AdditionalWateringInpu
 import RelativeHumidity from "../components/countedResults/RelativeHumidity";
 import AbsoluteHumidity from "../components/countedResults/AbsoluteHumidity";
 import Volatility from "../components/countedResults/Volatility";
+
+const CACTOO_VAPORIZES = 2750; // liters per year per gektar
 
 interface IProps {
 }
@@ -21,7 +25,7 @@ interface IState {
   treeAmount: number; // INPUT Amount of trees on the territory
   treeCutting: number; // INPUT How much of trees is cut every year
   treePlanting: number; // INPUT Trees planted per year
-  bushesAmount: number; // INPUT Amount of trees on the territory
+  cactooAmount: number; // INPUT Amount of trees on the territory
   precipation: number; // INPUT Measured in mm. Sahara: 25-200, Kalahari: 100-500, Atakama: 25
   additionalWatering: number; // INPUT Measured in mm. Is added to precipation. May be a river or whatever
   relativeHumidity: number; // absoluteHumidity/saturationVaporDensity
@@ -39,7 +43,7 @@ export default class extends React.Component<IProps, IState> {
       treeAmount: 3000,
       treeCutting: 0,
       treePlanting: 0,
-      bushesAmount: 5000,
+      cactooAmount: 5000,
       precipation: 150,
       additionalWatering: 0,
       relativeHumidity: 0, // non-input
@@ -48,7 +52,7 @@ export default class extends React.Component<IProps, IState> {
     };
   }
 
-  countAbsoluteHumidity = async (): Promise<number> => await((this.state.treeAmount * 365.25) + (this.state.bushesAmount * 365.25)) / (this.state.territory); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for bushes)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
+  countAbsoluteHumidity = async (): Promise<number> => await((this.state.treeAmount * 365.25) + (this.state.cactooAmount * 365.25)) / (this.state.territory); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
 
   countRelativeHumidity = async (): Promise<number> => await (await this.countAbsoluteHumidity() / saturationVaporDensity(this.state.averageTemperature)); // https://www.yaklass.ru/p/fizika/8-klass/izmenenie-sostoianiia-veshchestva-141552/otnositelnaia-vlazhnost-vozdukha-i-ee-izmerenie-189576/re-18d24d91-b778-4262-983f-4e1101acae16
 
@@ -111,9 +115,9 @@ export default class extends React.Component<IProps, IState> {
                                this.setState({ treePlanting: Number(event.target.value) });
                                this.setCountedResults();
                              }}/>
-          <BushesAmountInput bushesAmount={this.state.bushesAmount}
+          <CactooAmountInput cactooAmount={this.state.cactooAmount}
                              onInput={(event: any) => {
-                               this.setState({ bushesAmount: Number(event.target.value) });
+                               this.setState({ cactooAmount: Number(event.target.value) });
                                this.setCountedResults();
                              }}/>
         </div>
