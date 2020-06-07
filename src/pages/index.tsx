@@ -1,7 +1,6 @@
 // https://cyberleninka.ru/article/n/dnevnoy-rashod-vody-na-transpiratsiyu-tselym-drevesnym-rasteniem
 // https://studfile.net/preview/5707905/page:3/ - about volatility
 // http://sun.tsu.ru/mminfo/000063105/274/image/274-136.pdf and http://www.kovas.ru/pdf1/40.pdf about water vaporizing
-// (0.172*24*365.25)*1000
 
 
 import * as React from "react";
@@ -23,7 +22,11 @@ import HumidificationIndex from "../components/countedResults/HumidificationInde
 const CACTOO_VAPORIZES_PER_YEAR = 6000; // grams per year https://books.google.com.ua/books?id=cgo0ukOa_gIC&pg=PA9&lpg=PA9&dq=%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE+%D0%BA%D0%B0%D0%BA%D1%82%D1%83%D1%81%D0%BE%D0%B2+%D0%B2+%D0%BE%D0%B4%D0%BD%D0%BE%D0%B9+%D0%BF%D1%83%D1%81%D1%82%D1%8B%D0%BD%D0%B5&source=bl&ots=6FQXLOTKi6&sig=ACfU3U3f1b84bYd4NhgYaQFfiwywuMDKxQ&hl=ru&sa=X&ved=2ahUKEwid-7aZ2O3pAhWnk4sKHcG3BW8Q6AEwBXoECAkQAQ#v=onepage&q=%D0%B8%D1%81%D0%BF%D0%B0%D1%80%D1%8F%D0%B5%D1%82%20%D0%BA%D0%B0%D0%BA%D1%82%D1%83%D1%81&f=false
 const TREE_VAPORIZES_PER_DAY = 400000; //grams per day https://cyberleninka.ru/article/n/dnevnoy-rashod-vody-na-transpiratsiyu-tselym-drevesnym-rasteniem
 const CLOUD_HEIGHT = 5000; // meters https://public.wmo.int/ru/%D0%B2%D1%81%D0%B5%D0%BC%D0%B8%D1%80%D0%BD%D1%8B%D0%B9-%D0%BC%D0%B5%D1%82%D0%B5%D0%BE%D1%80%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9-%D0%B4%D0%B5%D0%BD%D1%8C-2017-%D0%B3/%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F-%D0%BE%D0%B1%D0%BB%D0%B0%D0%BA%D0%BE%D0%B2#:~:text=%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BE%D0%B1%D0%BB%D0%B0%D0%BA%D0%BE%D0%B2%20%D0%B2%D0%B5%D1%80%D1%85%D0%BD%D0%B5%D0%B3%D0%BE%20%D1%8F%D1%80%D1%83%D1%81%D0%B0%2C%20%D0%BA%D0%B0%D0%BA,%D0%BC%D0%B5%D1%82%D1%80%D0%BE%D0%B2%20(6%20500%20%D1%84%D1%83%D1%82%D0%BE%D0%B2).
-const DESERT_HUMIDIFICATION_INDEX = 0.15; // something is a desert if (precipation + extra water) / volatility < 0.15 https://ru.wikipedia.org/wiki/%D0%9F%D1%83%D1%81%D1%82%D1%8B%D0%BD%D1%8F
+const DESERT_HUMIDIFICATION_INDEX = 0.1;// something is a desert if (precipation + extra water) / volatility < 0.1  https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%8D%D1%84%D1%84%D0%B8%D1%86%D0%B8%D0%B5%D0%BD%D1%82_%D1%83%D0%B2%D0%BB%D0%B0%D0%B6%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F
+const HALF_DESERT_HUMIDIFICATION_INDEX = 0.3;
+const STEPPE_HUMIDIFICATION_INDEX = 0.6;
+const FOREST_STEPPE_HUMIDIFICATION_INDEX = 0.9;
+const FOREST_HUMIDIFICATION_INDEX = 1.2;
 const VOLGA_RIVER_YEARLY_WATERFLOW = 254; // km3/year (8060 m3/sec) https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D1%80%D0%B5%D0%BA_%D0%BF%D0%BE_%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B2%D0%BE%D0%B4%D0%BD%D0%BE%D1%81%D1%82%D0%B8
 
 interface IProps {
@@ -100,10 +103,10 @@ export default class extends React.Component<IProps, IState> {
     if (this.state.averageTemperature < 1) {
       backgroundStyle = "cold-desert";
     } else {
-      if (humidificationIndex <= 0.15) {
+      if (humidificationIndex <= DESERT_HUMIDIFICATION_INDEX) {
         backgroundStyle = "desert";
       }
-      if (humidificationIndex > 0.15 && humidificationIndex <= 0.4) {
+      if (humidificationIndex > DESERT_HUMIDIFICATION_INDEX && humidificationIndex <= 0.4) {
         backgroundStyle = "moderate";
       }
       if (humidificationIndex > 0.4 && humidificationIndex <= 1) {
