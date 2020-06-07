@@ -19,6 +19,7 @@ import Volatility from "../components/countedResults/Volatility";
 import WaterAmountInput from "../components/inputs/WaterAmountInput";
 import WaterIncome from "../components/countedResults/WaterIncome";
 import HumidificationIndex from "../components/countedResults/HumidificationIndex";
+import Header from "../components/Header";
 
 const CACTOO_VAPORIZES_PER_YEAR = 6000; // grams per year https://books.google.com.ua/books?id=cgo0ukOa_gIC&pg=PA9&lpg=PA9&dq=%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE+%D0%BA%D0%B0%D0%BA%D1%82%D1%83%D1%81%D0%BE%D0%B2+%D0%B2+%D0%BE%D0%B4%D0%BD%D0%BE%D0%B9+%D0%BF%D1%83%D1%81%D1%82%D1%8B%D0%BD%D0%B5&source=bl&ots=6FQXLOTKi6&sig=ACfU3U3f1b84bYd4NhgYaQFfiwywuMDKxQ&hl=ru&sa=X&ved=2ahUKEwid-7aZ2O3pAhWnk4sKHcG3BW8Q6AEwBXoECAkQAQ#v=onepage&q=%D0%B8%D1%81%D0%BF%D0%B0%D1%80%D1%8F%D0%B5%D1%82%20%D0%BA%D0%B0%D0%BA%D1%82%D1%83%D1%81&f=false
 const TREE_VAPORIZES_PER_DAY = 400000; //grams per day https://cyberleninka.ru/article/n/dnevnoy-rashod-vody-na-transpiratsiyu-tselym-drevesnym-rasteniem
@@ -147,6 +148,7 @@ export default class extends React.Component<IProps, IState> {
         <div className="background-image rainforest" style={{opacity: backgroundStyle==="rainforest"? 1:0}}/>
         <div className="background-image forest" style={{opacity: backgroundStyle==="forest"? 1:0}}/>
         <div className="background-image wetland" style={{opacity: backgroundStyle==="wetland"? 1:0}}/>
+        <Header/>
         <h1>Input Data</h1>
         <div className={"group-of-cards"}>
           <TerritoryInput territory={this.state.territory}

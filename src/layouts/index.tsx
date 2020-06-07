@@ -23,7 +23,6 @@ class DefaultLayout extends React.PureComponent<DefaultLayoutProps, void> {
             { name: "keywords", content: "sample, something" }
           ]}
         />
-        <Header/>
         <div className={'wrapper'}>
           {this.props.children()}
         </div>
