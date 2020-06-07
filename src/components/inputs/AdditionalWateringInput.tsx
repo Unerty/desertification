@@ -10,7 +10,7 @@ const AdditionalWateringInput = (props: IProps) =>
   <div className={"rounded card water-color"}>
     <span>AdditionalWatering: <strong> {props.additionalWatering} km³/year</strong></span>
     <input style={{ borderStyle: "unset", borderRadius: "10px" }}
-           type="number" id="additionalWateringSelector" name="additionalWateringSelector" min="0" max="20000" step="1" value={props.additionalWatering}
+           type="number" id="additionalWateringSelector" name="additionalWateringSelector" min="0" step="1" value={props.additionalWatering}
            onInput={(event) => props.onInput(event)}
            onChange={(event) => props.onInput(event)}
     />
