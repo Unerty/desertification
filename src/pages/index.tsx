@@ -47,6 +47,7 @@ interface IState {
   volatility: number; // How much humidity (in mm) is able to vaporize from all the surface
   absoluteHumidity: number; // Measured in grams per one meter cubic of air
   waterIncome: number // how much water comes each year
+  isPlaying: boolean;
 }
 
 
@@ -65,7 +66,8 @@ export default class extends React.Component<IProps, IState> {
       relativeHumidity: 0, // non-input
       volatility: 0, // non-input
       absoluteHumidity: 0, // non-input
-      waterIncome: 0 // non-input
+      waterIncome: 0, // non-input
+      isPlaying: false
     };
   }
 
@@ -116,7 +118,7 @@ export default class extends React.Component<IProps, IState> {
         backgroundStyle = "steppe";
       }
       if (humidificationIndex > STEPPE_HUMIDIFICATION_INDEX && humidificationIndex <= FOREST_STEPPE_HUMIDIFICATION_INDEX) {
-        if (this.state.averageTemperature <= 9 ) {
+        if (this.state.averageTemperature <= 9) {
           backgroundStyle = "cold-forest-steppe";
         } else {
           backgroundStyle = "forest-steppe";
@@ -129,7 +131,7 @@ export default class extends React.Component<IProps, IState> {
         if (this.state.averageTemperature > 9 && this.state.averageTemperature <= 22) {
           backgroundStyle = "forest";
         }
-        if (this.state.averageTemperature <= 9 ) {
+        if (this.state.averageTemperature <= 9) {
           backgroundStyle = "wetland";
         }
       }
@@ -139,16 +141,18 @@ export default class extends React.Component<IProps, IState> {
     }
     return (
       <div>
-        <div className="background-image cold-desert" style={{opacity: backgroundStyle==="cold-desert"? 1:0}}/>
-        <div className="background-image desert" style={{opacity: backgroundStyle==="desert"? 1:0}}/>
-        <div className="background-image half-desert" style={{opacity: backgroundStyle==="half-desert"? 1:0}}/>
-        <div className="background-image steppe" style={{opacity: backgroundStyle==="steppe"? 1:0}}/>
-        <div className="background-image forest-steppe" style={{opacity: backgroundStyle==="forest-steppe"? 1:0}}/>
-        <div className="background-image cold-forest-steppe" style={{opacity: backgroundStyle==="cold-forest-steppe"? 1:0}}/>
-        <div className="background-image rainforest" style={{opacity: backgroundStyle==="rainforest"? 1:0}}/>
-        <div className="background-image forest" style={{opacity: backgroundStyle==="forest"? 1:0}}/>
-        <div className="background-image wetland" style={{opacity: backgroundStyle==="wetland"? 1:0}}/>
-        <Header year={2020} isPlaying={true}/>
+        <div className="background-image cold-desert" style={{ opacity: backgroundStyle === "cold-desert" ? 1 : 0 }}/>
+        <div className="background-image desert" style={{ opacity: backgroundStyle === "desert" ? 1 : 0 }}/>
+        <div className="background-image half-desert" style={{ opacity: backgroundStyle === "half-desert" ? 1 : 0 }}/>
+        <div className="background-image steppe" style={{ opacity: backgroundStyle === "steppe" ? 1 : 0 }}/>
+        <div className="background-image forest-steppe"
+             style={{ opacity: backgroundStyle === "forest-steppe" ? 1 : 0 }}/>
+        <div className="background-image cold-forest-steppe"
+             style={{ opacity: backgroundStyle === "cold-forest-steppe" ? 1 : 0 }}/>
+        <div className="background-image rainforest" style={{ opacity: backgroundStyle === "rainforest" ? 1 : 0 }}/>
+        <div className="background-image forest" style={{ opacity: backgroundStyle === "forest" ? 1 : 0 }}/>
+        <div className="background-image wetland" style={{ opacity: backgroundStyle === "wetland" ? 1 : 0 }}/>
+        <Header year={2020} isPlaying={this.state.isPlaying} onPlayButtonClick={() => this.setState({isPlaying: !this.state.isPlaying})}/>
         <h1>Input Data</h1>
         <div className={"group-of-cards"}>
           <TerritoryInput territory={this.state.territory}

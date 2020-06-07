@@ -7,13 +7,14 @@ const PLAY_SYMBOL = "⏸️";
 interface IProps {
   year: number;
   isPlaying: boolean;
+  onPlayButtonClick: () => void;
 }
 
 const Header = (props: IProps) => (
   <div className={"header"}>
     <div
       style={{
-        marginLeft:"0.7rem",
+        marginLeft: "0.7rem",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -34,16 +35,19 @@ const Header = (props: IProps) => (
            color: "white",
            textDecoration: "none",
            width: "fit-content"
+
          }}
-         onClick={() => alert("kek")}
     >
       <h1 style={{
         margin: 0,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        paddingTop: "0.7rem"
-      }}>
+        padding: 0,
+        marginBottom: "0.1rem",
+        cursor: "pointer"
+      }}
+          onClick={() => props.onPlayButtonClick()}>
         {props.isPlaying ? STOP_SYMBOL : PLAY_SYMBOL}
       </h1>
     </div>
