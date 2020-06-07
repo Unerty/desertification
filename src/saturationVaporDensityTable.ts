@@ -1,9 +1,4 @@
 let table = new Map();
-table.set(-30, 0.33);
-table.set(-29, 0.37);
-table.set(-28, 0.41);
-table.set(-27, 0.46);
-table.set(-26, 0.51);
 table.set(-25, 0.55);
 table.set(-24, 0.6);
 table.set(-23, 0.66);
