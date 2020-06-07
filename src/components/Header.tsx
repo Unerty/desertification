@@ -1,58 +1,56 @@
-import Link from "gatsby-link";
 import * as React from "react";
 
-const PLAY_SYMBOL = "▶️";
-const STOP_SYMBOL = "⏸️";
-
 interface IProps {
-  year: number;
-  isPlaying: boolean;
-  onPlayButtonClick: () => void;
+  riskCategory: string;
 }
 
-const Header = (props: IProps) => (
-  <div className={"header"}>
-    <div
-      style={{
-        marginLeft: "0.7rem",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        textDecoration: "none",
-        minWidth: "12rem",
-        width: "fit-content"
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        {`Year: ${props.year}`}
+
+const Header = (props: IProps) => {
+  let risk = "";
+  let biome = "";
+  if (props.riskCategory === "cold-desert") {
+    risk = "Very high";
+    biome = "Cold desert";
+  }
+  if (props.riskCategory === "desert") {
+    risk = "Very high";
+    biome = "Desert";
+  }
+  if (props.riskCategory === "half-desert") {
+    risk = "High";
+    biome = "Half-desert";
+  }
+  if (props.riskCategory === "steppe") {
+    risk = "Medium";
+    biome = "Steppe";
+  }
+  if (props.riskCategory === "forest-steppe") {
+    risk = "Moderate";
+    biome = "Forest-steppe";
+  }
+  if (props.riskCategory === "cold-forest-steppe") {
+    risk = "Moderate";
+    biome = "Forest-steppe";
+  }
+  if (props.riskCategory === "forest") {
+    risk = "Low";
+    biome = "Forest";
+  }
+  if (props.riskCategory === "rainforest") {
+    risk = "Low";
+    biome = "Rainforest";
+  }
+  if (props.riskCategory === "wetland") {
+    risk = "Low";
+    biome = "Wetland";
+  }
+  return (
+    <div className={"header"}>
+      <h1>
+        Risk: {risk}, Biome: {biome}
       </h1>
     </div>
-    <div className="playbackSymbol"
-         style={{
-           display: "flex",
-           flexDirection: "column",
-           justifyContent: "center",
-           color: "white",
-           textDecoration: "none",
-           width: "fit-content"
-
-         }}
-    >
-      <h1 style={{
-        margin: 0,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        padding: 0,
-        marginBottom: "0.1rem",
-        cursor: "pointer"
-      }}
-          onClick={() => props.onPlayButtonClick()}>
-        {props.isPlaying ? STOP_SYMBOL : PLAY_SYMBOL}
-      </h1>
-    </div>
-
-  </div>
-);
+  );
+};
 
 export default Header;

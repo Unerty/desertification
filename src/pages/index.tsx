@@ -5,7 +5,7 @@
 
 
 import * as React from "react";
-import { saturationVaporDensity, waterVaporizingCoefficient } from "../functions";
+import { countWaterVolume, saturationVaporDensity, waterVaporizingCoefficient } from "../functions";
 import TemperatureInput from "../components/inputs/TemperatureInput";
 import TerritoryInput from "../components/inputs/TerritoryInput";
 import TreeAmountInput from "../components/inputs/TreeAmountInput";
@@ -29,6 +29,7 @@ const HALF_DESERT_HUMIDIFICATION_INDEX = 0.3;
 const STEPPE_HUMIDIFICATION_INDEX = 0.6;
 const FOREST_STEPPE_HUMIDIFICATION_INDEX = 0.9;
 const VOLGA_RIVER_YEARLY_WATERFLOW = 254; // km3/year (8060 m3/sec) https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D1%80%D0%B5%D0%BA_%D0%BF%D0%BE_%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B2%D0%BE%D0%B4%D0%BD%D0%BE%D1%81%D1%82%D0%B8
+const MAX_AMOUNT_OF_TREES_PER_ONE_KM2 = 27777;
 
 interface IProps {
 }
@@ -46,8 +47,6 @@ interface IState {
   volatility: number; // How much humidity (in mm) is able to vaporize from all the surface
   absoluteHumidity: number; // Measured in grams per one meter cubic of air
   waterIncome: number // how much water comes each year
-  isPlaying: boolean;
-  year: number;
 }
 
 
@@ -66,9 +65,7 @@ export default class extends React.Component<IProps, IState> {
       relativeHumidity: 0, // non-input
       volatility: 0, // non-input
       absoluteHumidity: 0, // non-input
-      waterIncome: 0, // non-input
-      isPlaying: false,
-      year: 2020
+      waterIncome: 0 // non-input
     };
   }
 
@@ -76,17 +73,6 @@ export default class extends React.Component<IProps, IState> {
     this.setCountedResults();
   }
 
-  startYearFlow(this: any) {
-    this.setState({
-      isPlaying: true
-    });
-    this.timer = setInterval(() => this.setState({ year: this.state.year + 1 }), 100);
-  }
-
-  stopYearFlow(this: any) {
-    this.setState({ isPlaying: false });
-    clearInterval(this.timer);
-  }
 
   countAbsoluteHumidity = async (): Promise<number> => {
     return await ((Number(this.state.treeAmount * TREE_VAPORIZES_PER_DAY / CLOUD_HEIGHT * 365.25 + this.state.cactooAmount * CACTOO_VAPORIZES_PER_YEAR / CLOUD_HEIGHT)) + Number(this.state.waterAmount) * waterVaporizingCoefficient(this.state.averageTemperature) * 50) / (this.state.territory * CLOUD_HEIGHT); // ((treeAmount * daysInYear * howMuchEachTreeVaporizesPerDayInGrams) + (same for cactoo)) / (height * SQkmToSQmetersCoefficient * desertTerritory)
@@ -98,7 +84,7 @@ export default class extends React.Component<IProps, IState> {
     return await Math.max(((0.01 * Math.pow(addedAverageTemperature, 2)) * (100 - await this.countRelativeHumidity())), 1);// volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
   };
 
-  countWaterIncome = (): number => (Number(this.state.precipation) + (1000 * (Number(this.state.additionalWatering) / Number(this.state.territory))) - ((Number(this.state.waterAmount) * waterVaporizingCoefficient(Number(this.state.averageTemperature))) / (Number(this.state.territory) * 100000)));
+  countWaterIncome = (): number => (Number(this.state.precipation) + (1000 * (Number(this.state.additionalWatering) / Number(this.state.territory))) - ((Number(this.state.waterAmount) * waterVaporizingCoefficient(Number(this.state.averageTemperature))) / (Number(this.state.territory) * 1000000000)));
 
   setAbsoluteHumidity = async (): Promise<void> => this.setState({ absoluteHumidity: await this.countAbsoluteHumidity() });
 
@@ -112,70 +98,75 @@ export default class extends React.Component<IProps, IState> {
     this.setAbsoluteHumidity().then(this.setRelativeHumidity).then(this.setVolatility).then(this.setRelativeHumidity).then(this.setAbsoluteHumidity).then(this.setWaterIncome);
   };
 
+  countHumidificationIndex = (): number => {
+    return this.state.waterIncome / this.state.volatility; // (precipation + extra water) / volatility
+  };
 
-  public render() {
-    const humidificationIndex = this.countWaterIncome() / this.state.volatility; // (precipation + extra water) / volatility < 0.15
-    let backgroundStyle = "";
+  getRiskCategory = (): string => {
+    const humidificationIndex = this.countHumidificationIndex();
+    let riskCategory = "";
 
     if (this.state.averageTemperature < 1) {
-      backgroundStyle = "cold-desert";
+      riskCategory = "cold-desert";
     }
     if (this.state.averageTemperature >= 1 && this.state.averageTemperature < 40) {
       if (humidificationIndex <= DESERT_HUMIDIFICATION_INDEX) {
-        backgroundStyle = "desert";
+        riskCategory = "desert";
       }
       if (humidificationIndex > DESERT_HUMIDIFICATION_INDEX && humidificationIndex <= HALF_DESERT_HUMIDIFICATION_INDEX) {
-        backgroundStyle = "half-desert";
+        riskCategory = "half-desert";
       }
       if (humidificationIndex > HALF_DESERT_HUMIDIFICATION_INDEX && humidificationIndex <= STEPPE_HUMIDIFICATION_INDEX) {
-        backgroundStyle = "steppe";
+        riskCategory = "steppe";
       }
       if (humidificationIndex > STEPPE_HUMIDIFICATION_INDEX && humidificationIndex <= FOREST_STEPPE_HUMIDIFICATION_INDEX) {
         if (this.state.averageTemperature <= 9) {
-          backgroundStyle = "cold-forest-steppe";
+          riskCategory = "cold-forest-steppe";
         } else {
-          backgroundStyle = "forest-steppe";
+          riskCategory = "forest-steppe";
         }
       }
       if (humidificationIndex > FOREST_STEPPE_HUMIDIFICATION_INDEX) {
         if (this.state.averageTemperature > 22) {
-          backgroundStyle = "rainforest";
+          riskCategory = "rainforest";
         }
         if (this.state.averageTemperature > 9 && this.state.averageTemperature <= 22) {
-          backgroundStyle = "forest";
+          riskCategory = "forest";
         }
         if (this.state.averageTemperature <= 9) {
-          backgroundStyle = "wetland";
+          riskCategory = "wetland";
         }
       }
     }
     if (this.state.averageTemperature >= 40) {
-      backgroundStyle = "desert";
+      riskCategory = "desert";
     }
+    return riskCategory;
+  };
+
+  public render() {
+    const riskCategory = this.getRiskCategory();
     return (
       <div>
-        <div className="background-image cold-desert" style={{ opacity: backgroundStyle === "cold-desert" ? 1 : 0 }}/>
-        <div className="background-image desert" style={{ opacity: backgroundStyle === "desert" ? 1 : 0 }}/>
-        <div className="background-image half-desert" style={{ opacity: backgroundStyle === "half-desert" ? 1 : 0 }}/>
-        <div className="background-image steppe" style={{ opacity: backgroundStyle === "steppe" ? 1 : 0 }}/>
+        <div className="background-image cold-desert" style={{ opacity: riskCategory === "cold-desert" ? 1 : 0 }}/>
+        <div className="background-image desert" style={{ opacity: riskCategory === "desert" ? 1 : 0 }}/>
+        <div className="background-image half-desert" style={{ opacity: riskCategory === "half-desert" ? 1 : 0 }}/>
+        <div className="background-image steppe" style={{ opacity: riskCategory === "steppe" ? 1 : 0 }}/>
         <div className="background-image forest-steppe"
-             style={{ opacity: backgroundStyle === "forest-steppe" ? 1 : 0 }}/>
+             style={{ opacity: riskCategory === "forest-steppe" ? 1 : 0 }}/>
         <div className="background-image cold-forest-steppe"
-             style={{ opacity: backgroundStyle === "cold-forest-steppe" ? 1 : 0 }}/>
-        <div className="background-image rainforest" style={{ opacity: backgroundStyle === "rainforest" ? 1 : 0 }}/>
-        <div className="background-image forest" style={{ opacity: backgroundStyle === "forest" ? 1 : 0 }}/>
-        <div className="background-image wetland" style={{ opacity: backgroundStyle === "wetland" ? 1 : 0 }}/>
-        <Header year={this.state.year} isPlaying={this.state.isPlaying}
-                onPlayButtonClick={() => {
-                  this.state.isPlaying ? this.stopYearFlow() : this.startYearFlow();
-                }}/>
+             style={{ opacity: riskCategory === "cold-forest-steppe" ? 1 : 0 }}/>
+        <div className="background-image rainforest" style={{ opacity: riskCategory === "rainforest" ? 1 : 0 }}/>
+        <div className="background-image forest" style={{ opacity: riskCategory === "forest" ? 1 : 0 }}/>
+        <div className="background-image wetland" style={{ opacity: riskCategory === "wetland" ? 1 : 0 }}/>
+        <Header riskCategory={riskCategory}/>
         <h1>Input Data</h1>
         <div className={"group-of-cards"}>
           <TerritoryInput territory={this.state.territory}
                           onInput={(event: any) => {
                             this.setState({ territory: Number(event.target.value) });
                             if (Number(event.target.value) < this.state.waterAmount) {
-                              this.setState({waterAmount: Number(event.target.value)})
+                              this.setState({ waterAmount: Number(event.target.value) });
                             }
                             this.setCountedResults();
                           }}/>
@@ -183,7 +174,7 @@ export default class extends React.Component<IProps, IState> {
                             onInput={(event: any) => {
                               this.setState({ waterAmount: Number(event.target.value) });
                               if (Number(event.target.value) > this.state.territory) {
-                                this.setState({territory: Number(event.target.value)})
+                                this.setState({ territory: Number(event.target.value) });
                               }
                               this.setCountedResults();
                             }}/>
@@ -224,7 +215,7 @@ export default class extends React.Component<IProps, IState> {
           <AbsoluteHumidity absoluteHumidity={this.state.absoluteHumidity}/>
           <Volatility volatility={this.state.volatility}/>
           <WaterIncome waterIncome={this.state.waterIncome}/>
-          <HumidificationIndex humidificationIndex={humidificationIndex}/>
+          <HumidificationIndex humidificationIndex={this.countHumidificationIndex()}/>
         </div>
 
         <div className="moderate"/>

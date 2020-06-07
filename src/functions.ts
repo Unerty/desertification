@@ -11,6 +11,11 @@ export const saturationVaporDensity = (temperature: number) => { // for example,
   }
 };
 
-export const waterVaporizingCoefficient = (temperature: number):number => { // how much water is vaporized per 1 km2 per year depending on the temperature
-  return (temperature >= 0) ? Number((WATER_VAPORIZES_PER_YEAR_PER_ONEM2_WHEN_30DEGREES * saturationVaporDensity(temperature))) / 30.3 : Number((WATER_VAPORIZES_PER_YEAR_PER_ONEM2_WHEN_30DEGREES * saturationVaporDensity(temperature)))/(1000000*30.3)
+export const waterVaporizingCoefficient = (temperature: number): number => { // how much water is vaporized per 1 km2 per year depending on the temperature
+  return (temperature >= 0) ? Number((WATER_VAPORIZES_PER_YEAR_PER_ONEM2_WHEN_30DEGREES * saturationVaporDensity(temperature))) / 30.3 : Number((WATER_VAPORIZES_PER_YEAR_PER_ONEM2_WHEN_30DEGREES * saturationVaporDensity(temperature))) / (1000000 * 30.3);
+};
+
+
+export const countWaterVolume = (waterAmount: number): number => { // returns water Volume in cubical kilometers
+  return ((waterAmount * 1000000)*(Math.log2(waterAmount)+1))/1000000000
 };
