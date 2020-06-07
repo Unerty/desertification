@@ -143,6 +143,7 @@ export default class extends React.Component<IProps, IState> {
         <div className="background-image half-desert" style={{opacity: backgroundStyle==="half-desert"? 1:0}}/>
         <div className="background-image steppe" style={{opacity: backgroundStyle==="steppe"? 1:0}}/>
         <div className="background-image forest-steppe" style={{opacity: backgroundStyle==="forest-steppe"? 1:0}}/>
+        <div className="background-image cold-forest-steppe" style={{opacity: backgroundStyle==="cold-forest-steppe"? 1:0}}/>
         <div className="background-image rainforest" style={{opacity: backgroundStyle==="rainforest"? 1:0}}/>
         <div className="background-image forest" style={{opacity: backgroundStyle==="forest"? 1:0}}/>
         <div className="background-image wetland" style={{opacity: backgroundStyle==="wetland"? 1:0}}/>
