@@ -138,7 +138,14 @@ export default class extends React.Component<IProps, IState> {
     }
     return (
       <div>
-        <div className={`background-image + ${backgroundStyle}`}/>
+        <div className="background-image cold-desert" style={{opacity: backgroundStyle==="cold-desert"? 1:0}}/>
+        <div className="background-image desert" style={{opacity: backgroundStyle==="desert"? 1:0}}/>
+        <div className="background-image half-desert" style={{opacity: backgroundStyle==="half-desert"? 1:0}}/>
+        <div className="background-image steppe" style={{opacity: backgroundStyle==="steppe"? 1:0}}/>
+        <div className="background-image forest-steppe" style={{opacity: backgroundStyle==="forest-steppe"? 1:0}}/>
+        <div className="background-image rainforest" style={{opacity: backgroundStyle==="rainforest"? 1:0}}/>
+        <div className="background-image forest" style={{opacity: backgroundStyle==="forest"? 1:0}}/>
+        <div className="background-image wetland" style={{opacity: backgroundStyle==="wetland"? 1:0}}/>
         <h1>Input Data</h1>
         <div className={"group-of-cards"}>
           <TerritoryInput territory={this.state.territory}
@@ -190,15 +197,6 @@ export default class extends React.Component<IProps, IState> {
           <WaterIncome waterIncome={this.state.waterIncome}/>
           <HumidificationIndex humidificationIndex={humidificationIndex}/>
         </div>
-
-        <div className="cold-desert"/>
-        <div className="desert"/>
-        <div className="half-desert"/>
-        <div className="steppe"/>
-        <div className="forest-steppe"/>
-        <div className="rainforest"/>
-        <div className="forest"/>
-        <div className="wetland"/>
 
         <div className="moderate"/>
         <div className="rain"/>
