@@ -148,7 +148,7 @@ export default class extends React.Component<IProps, IState> {
         <div className="background-image rainforest" style={{opacity: backgroundStyle==="rainforest"? 1:0}}/>
         <div className="background-image forest" style={{opacity: backgroundStyle==="forest"? 1:0}}/>
         <div className="background-image wetland" style={{opacity: backgroundStyle==="wetland"? 1:0}}/>
-        <Header/>
+        <Header year={2020} isPlaying={true}/>
         <h1>Input Data</h1>
         <div className={"group-of-cards"}>
           <TerritoryInput territory={this.state.territory}
