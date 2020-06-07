@@ -1,8 +1,8 @@
 import Link from "gatsby-link";
 import * as React from "react";
 
-const STOP_SYMBOL = "▶️";
-const PLAY_SYMBOL = "⏸️";
+const PLAY_SYMBOL = "▶️";
+const STOP_SYMBOL = "⏸️";
 
 interface IProps {
   year: number;
