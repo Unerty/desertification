@@ -106,24 +106,34 @@ export default class extends React.Component<IProps, IState> {
       if (humidificationIndex <= DESERT_HUMIDIFICATION_INDEX) {
         backgroundStyle = "desert";
       }
-      if (humidificationIndex > DESERT_HUMIDIFICATION_INDEX && humidificationIndex <= 0.4) {
-        backgroundStyle = "moderate";
+      if (humidificationIndex > DESERT_HUMIDIFICATION_INDEX && humidificationIndex <= HALF_DESERT_HUMIDIFICATION_INDEX) {
+        backgroundStyle = "half-desert";
       }
-      if (humidificationIndex > 0.4 && humidificationIndex <= 1) {
-        if(this.state.averageTemperature > 18){
+      if (humidificationIndex > HALF_DESERT_HUMIDIFICATION_INDEX && humidificationIndex <= STEPPE_HUMIDIFICATION_INDEX) {
+        backgroundStyle = "steppe";
+      }
+      if (humidificationIndex > STEPPE_HUMIDIFICATION_INDEX && humidificationIndex <= FOREST_STEPPE_HUMIDIFICATION_INDEX) {
+        if (this.state.averageTemperature <= 9 ) {
+          backgroundStyle = "cold-forest-steppe";
+        } else {
+          backgroundStyle = "forest-steppe";
+        }
+      }
+      if (humidificationIndex > FOREST_STEPPE_HUMIDIFICATION_INDEX) {
+        backgroundStyle = "forest";
+        if (this.state.averageTemperature > 22) {
           backgroundStyle = "rainforest";
         }
-        else {
+        if (this.state.averageTemperature > 9 && this.state.averageTemperature <= 22) {
+          backgroundStyle = "forest";
+        } else {
           backgroundStyle = "wetland";
         }
-      }
-      if (humidificationIndex > 1) {
-        backgroundStyle = "rain";
       }
     }
     return (
       <div>
-        <div className={`background-image + ${backgroundStyle}`} />
+        <div className={`background-image + ${backgroundStyle}`}/>
         <h1>Input Data</h1>
         <div className={"group-of-cards"}>
           <TerritoryInput territory={this.state.territory}
@@ -175,12 +185,18 @@ export default class extends React.Component<IProps, IState> {
           <WaterIncome waterIncome={this.state.waterIncome}/>
           <HumidificationIndex humidificationIndex={humidificationIndex}/>
         </div>
+
         <div className="cold-desert"/>
         <div className="desert"/>
-        <div className="moderate"/>
+        <div className="half-desert"/>
+        <div className="steppe"/>
+        <div className="forest-steppe"/>
         <div className="rainforest"/>
-        <div className="rain"/>
+        <div className="forest"/>
         <div className="wetland"/>
+
+        <div className="moderate"/>
+        <div className="rain"/>
       </div>
     );
   }
