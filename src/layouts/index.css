@@ -50,7 +50,7 @@ strong {
   align-items: center;
   width: stretch;
   padding: 1.5rem;
-  margin: 1.5rem;
+  margin: 0.5rem;
 }
 
 span {
@@ -139,6 +139,9 @@ h1 {
 }
 
 @media only screen and (max-width: 768px) {
+  .card{
+    margin: 1.5rem;
+  }
   .group-of-cards {
     grid-template-columns: 1fr;
   }
