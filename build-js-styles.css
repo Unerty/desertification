@@ -17,11 +17,19 @@ strong {
 
 .header {
   background-color: sandybrown;
-  position: relative;
-  z-index: 20001;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 30001;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0.1rem;
 }
 
 .wrapper {
+  margin-top: 3rem;
   padding: 1.5rem;
 }
 
@@ -46,7 +54,7 @@ strong {
   align-items: center;
   width: stretch;
   padding: 1.5rem;
-  margin: 1.5rem;
+  margin: 0.5rem;
 }
 
 span {
@@ -135,6 +143,9 @@ h1 {
 }
 
 @media only screen and (max-width: 768px) {
+  .card{
+    margin: 1.5rem;
+  }
   .group-of-cards {
     grid-template-columns: 1fr;
   }
