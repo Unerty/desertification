@@ -7,7 +7,7 @@ interface IProps {
 
 const HumidificationIndex = (props: IProps) =>
   <div className={"rounded card"}>
-    <span>Humidification Index: <strong> {props.humidificationIndex} </strong></span>
+    <span>Індекс зволоження: <strong> {props.humidificationIndex} </strong></span>
   </div>;
 
 export default HumidificationIndex;

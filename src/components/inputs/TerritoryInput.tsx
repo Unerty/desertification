@@ -8,7 +8,7 @@ interface IProps {
 
 const TerritoryInput = (props: IProps) =>
   <div className={"rounded card"}>
-    <span>Territory area: <strong> {props.territory} km²</strong></span>
+    <span>Площа території: <strong> {props.territory} км²</strong></span>
     <input style={{ borderStyle: "unset", borderRadius: "10px" }}
            type="number" id="territorySelector" name="territorySelector" min="0" step="1" value={props.territory}
            onInput={(event) => props.onInput(event)}

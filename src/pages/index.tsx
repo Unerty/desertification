@@ -10,7 +10,6 @@ import TemperatureInput from "../components/inputs/TemperatureInput";
 import TerritoryInput from "../components/inputs/TerritoryInput";
 import TreeAmountInput from "../components/inputs/TreeAmountInput";
 import CactooAmountInput from "../components/inputs/CactooAmountInput";
-import TreePlantingInput from "../components/inputs/TreePlantingInput";
 import PrecipationInput from "../components/inputs/PrecipationInput";
 import AdditionalWateringInput from "../components/inputs/AdditionalWateringInput";
 import RelativeHumidity from "../components/countedResults/RelativeHumidity";
@@ -160,7 +159,7 @@ export default class extends React.Component<IProps, IState> {
         <div className="background-image forest" style={{ opacity: riskCategory === "forest" ? 1 : 0 }}/>
         <div className="background-image wetland" style={{ opacity: riskCategory === "wetland" ? 1 : 0 }}/>
         <Header riskCategory={riskCategory}/>
-        <h1>Input Data</h1>
+        <h1>Введення даних</h1>
         <div className={"group-of-cards"}>
           <TerritoryInput territory={this.state.territory}
                           onInput={(event: any) => {
@@ -198,18 +197,13 @@ export default class extends React.Component<IProps, IState> {
                              this.setState({ treeAmount: Number(event.target.value) });
                              this.setCountedResults();
                            }}/>
-          <TreePlantingInput treePlanting={this.state.treePlanting}
-                             onInput={(event: any) => {
-                               this.setState({ treePlanting: Number(event.target.value) });
-                               this.setCountedResults();
-                             }}/>
           <CactooAmountInput cactooAmount={this.state.cactooAmount}
                              onInput={(event: any) => {
                                this.setState({ cactooAmount: Number(event.target.value) });
                                this.setCountedResults();
                              }}/>
         </div>
-        <h1>Counted Results</h1>
+        <h1>Підраховані проміжні результати</h1>
         <div className={"group-of-cards"}>
           <RelativeHumidity relativeHumidity={this.state.relativeHumidity}/>
           <AbsoluteHumidity absoluteHumidity={this.state.absoluteHumidity}/>

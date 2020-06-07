@@ -7,7 +7,7 @@ interface IProps {
 
 const AbsoluteHumidity = (props: IProps) =>
   <div className={"rounded card water-color"}>
-    <span>Absolute Humidity: <strong> {props.absoluteHumidity} g/m³</strong></span>
+    <span>Абсолютна вологість: <strong> {props.absoluteHumidity} г/м³</strong></span>
   </div>;
 
 export default AbsoluteHumidity;

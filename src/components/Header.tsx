@@ -9,45 +9,45 @@ const Header = (props: IProps) => {
   let risk = "";
   let biome = "";
   if (props.riskCategory === "cold-desert") {
-    risk = "Very high";
-    biome = "Cold desert";
+    risk = "Дуже високий";
+    biome = "Холодна пустеля";
   }
   if (props.riskCategory === "desert") {
-    risk = "Very high";
-    biome = "Desert";
+    risk = "Дуже високий";
+    biome = "Пустеля";
   }
   if (props.riskCategory === "half-desert") {
-    risk = "High";
-    biome = "Half-desert";
+    risk = "Високий";
+    biome = "Напівпустеля";
   }
   if (props.riskCategory === "steppe") {
-    risk = "Medium";
-    biome = "Steppe";
+    risk = "Середній";
+    biome = "Степ";
   }
   if (props.riskCategory === "forest-steppe") {
-    risk = "Moderate";
-    biome = "Forest-steppe";
+    risk = "Помірний";
+    biome = "Лісостеп";
   }
   if (props.riskCategory === "cold-forest-steppe") {
-    risk = "Moderate";
-    biome = "Forest-steppe";
+    risk = "Помірний";
+    biome = "Лісостеп";
   }
   if (props.riskCategory === "forest") {
-    risk = "Low";
-    biome = "Forest";
+    risk = "Низький";
+    biome = "Ліс";
   }
   if (props.riskCategory === "rainforest") {
-    risk = "Low";
-    biome = "Rainforest";
+    risk = "Низький";
+    biome = "Джунглі";
   }
   if (props.riskCategory === "wetland") {
-    risk = "Low";
-    biome = "Wetland";
+    risk = "Низький";
+    biome = "Болото";
   }
   return (
     <div className={"header"}>
       <h1>
-        Risk: {risk}, Biome: {biome}
+        Ризик: {risk}, Біом: {biome}
       </h1>
     </div>
   );

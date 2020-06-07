@@ -7,7 +7,7 @@ interface IProps {
 
 const WaterIncome = (props: IProps) =>
   <div className={"rounded card water-color"}>
-    <span>Water Income: <strong> {props.waterIncome} mm/year</strong></span>
+    <span>Прихід води: <strong> {props.waterIncome} мм/рік</strong></span>
   </div>;
 
 export default WaterIncome;

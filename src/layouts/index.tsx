@@ -2,7 +2,6 @@ import * as React from "react";
 import Helmet from "react-helmet";
 
 import "./index.css";
-import Header from "../components/Header";
 
 
 interface DefaultLayoutProps extends React.HTMLProps<HTMLDivElement> {
@@ -17,10 +16,10 @@ class DefaultLayout extends React.PureComponent<DefaultLayoutProps, void> {
     return (
       <div>
         <Helmet
-          title="Desertification"
+          title="Опустелювання"
           meta={[
-            { name: "description", content: "Sample" },
-            { name: "keywords", content: "sample, something" }
+            { name: "description", content: "Count your desert" },
+            { name: "keywords", content: "desert, desertification, humidity, пустеля" }
           ]}
         />
         <div className={'wrapper'}>
