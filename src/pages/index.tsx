@@ -26,7 +26,7 @@ const CLOUD_HEIGHT = 5000; // meters https://public.wmo.int/ru/%D0%B2%D1%81%D0%B
 const DESERT_HUMIDIFICATION_INDEX = 0.1;// something is a desert if (precipation + extra water) / volatility < 0.1  https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%8D%D1%84%D1%84%D0%B8%D1%86%D0%B8%D0%B5%D0%BD%D1%82_%D1%83%D0%B2%D0%BB%D0%B0%D0%B6%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F
 const HALF_DESERT_HUMIDIFICATION_INDEX = 0.5;
 const STEPPE_HUMIDIFICATION_INDEX = 1;
-const FOREST_STEPPE_HUMIDIFICATION_INDEX = 1.2;
+const FOREST_STEPPE_HUMIDIFICATION_INDEX = 1.3;
 const VOLGA_RIVER_YEARLY_WATERFLOW = 254; // km3/year (8060 m3/sec) https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D1%80%D0%B5%D0%BA_%D0%BF%D0%BE_%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B2%D0%BE%D0%B4%D0%BD%D0%BE%D1%81%D1%82%D0%B8
 const MAX_AMOUNT_OF_TREES_PER_ONE_KM2 = 27777;
 
