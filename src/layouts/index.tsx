@@ -5,11 +5,7 @@ import Helmet from "react-helmet";
 import "./index.css";
 
 const Header = () => (
-  <div className={"header"}
-    style={{
-      background: "sandybrown",
-    }}
-  >
+  <div className={"header"}>
       <h1 style={{ margin: 0}}>
         <Link
           to="/"

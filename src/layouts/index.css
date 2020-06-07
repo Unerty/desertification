@@ -20,9 +20,9 @@ strong {
 }
 
 .header {
+  background-color: sandybrown;
   position: relative;
   z-index: 20001;
-  padding: 1.5rem;
 }
 
 .wrapper {
@@ -59,6 +59,11 @@ span {
 }
 
 h1 {
+  color: white;
+  background-color: rgba(244, 164, 96, 0.8);
+  border-radius: 18px;
+  padding: 1rem;
+  width: fit-content;
   position: relative;
   z-index: 20001;
 }
