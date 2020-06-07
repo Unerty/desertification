@@ -1,24 +1,9 @@
 import * as React from "react";
-import Link from "gatsby-link";
 import Helmet from "react-helmet";
 
 import "./index.css";
+import Header from "../components/Header";
 
-const Header = () => (
-  <div className={"header"}>
-      <h1 style={{ margin: 0}}>
-        <Link
-          to="/"
-          style={{
-            color: "white",
-            textDecoration: "none"
-          }}
-        >
-          Desertification
-        </Link>
-      </h1>
-  </div>
-);
 
 interface DefaultLayoutProps extends React.HTMLProps<HTMLDivElement> {
   location: {
