@@ -95,7 +95,7 @@ export default class extends React.Component<IProps, IState> {
 
   countVolatility = async (): Promise<number> => {
     const addedAverageTemperature = 25 + this.state.averageTemperature;
-    return await Math.max(((0.01 * Math.pow(addedAverageTemperature, 2)) * (100 - await this.countRelativeHumidity())), 0.01);// volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
+    return await Math.max(((0.01 * Math.pow(addedAverageTemperature, 2)) * (100 - await this.countRelativeHumidity())), 1);// volatility http://meteorologist.ru/formula-isparyaemosti-ivanova.html
   };
 
   countWaterIncome = (): number => (Number(this.state.precipation) + (1000 * (Number(this.state.additionalWatering) / Number(this.state.territory))) - ((Number(this.state.waterAmount) * waterVaporizingCoefficient(Number(this.state.averageTemperature))) / (Number(this.state.territory) * 100000)));
