@@ -178,11 +178,17 @@ export default class extends React.Component<IProps, IState> {
           <TerritoryInput territory={this.state.territory}
                           onInput={(event: any) => {
                             this.setState({ territory: Number(event.target.value) });
+                            if (Number(event.target.value) < this.state.waterAmount) {
+                              this.setState({waterAmount: Number(event.target.value)})
+                            }
                             this.setCountedResults();
                           }}/>
           <WaterAmountInput waterAmount={this.state.waterAmount}
                             onInput={(event: any) => {
                               this.setState({ waterAmount: Number(event.target.value) });
+                              if (Number(event.target.value) > this.state.territory) {
+                                this.setState({territory: Number(event.target.value)})
+                              }
                               this.setCountedResults();
                             }}/>
           <TemperatureInput temperature={this.state.averageTemperature}
